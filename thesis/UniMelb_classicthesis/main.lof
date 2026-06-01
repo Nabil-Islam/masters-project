@@ -1,0 +1,19 @@
+\babel@toc {british}{}\relax 
+\deactivateaddvspace 
+\babel@toc {british}{}\relax 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Comparison of empirical base pair recall (EBR), pileup mappability, and GC content across selected regions of the H37Rv MTB genome. (A) Shows the region including \textit {fabG1}, \textit {inhA}, and \textit {hemZ}, which has high EBR and mappability. (B) Shows a region containing \textit {PE\_PGRS53} and \textit {PE\_PGRS54}, illustrating the lower empirical recall and mappability (Marin \textit {et al.}, 2022).}}{10}{figure.caption.10}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Mean single nucleotide substitution (SNS) and INDEL variant calling approaches across different masks. (A) SNS detection performance was assesed with three masking strategies: permissive masks (low pileup mappability regions excluded), no masking (no regions excluded) and traditional masks (PLC regions excluded). (B) Short INDEL performance was also included. The orange diamonds represent mean precision and recall at MQ threshold of 40. (Marin \textit {et al.}, 2022) }}{11}{figure.caption.11}%
+\ttl@tocsep 
+\def \@chapapp {\appendixname }
+\ttl@tocsep 
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
