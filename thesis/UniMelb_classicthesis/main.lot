@@ -12,6 +12,9 @@
 \ttl@tocsep 
 \ttl@tocsep 
 \ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
+\ttl@tocsep 
 \def \@chapapp {\appendixname }
 \ttl@tocsep 
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

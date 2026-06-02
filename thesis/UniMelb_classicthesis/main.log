@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.6)  1 JUN 2026 20:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.6)  3 JUN 2026 00:04
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1487,7 +1487,11 @@ Package csquotes Info: Redefining alias 'default' -> 'british'.
 LaTeX Font Info:    Trying to load font information for T1+pplj on input line 40.
  (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/t1pplj.fd
 File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
-) (./main.aux)
+) (./main.aux
+
+LaTeX Warning: Label `fig:erlr' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
@@ -1754,28 +1758,32 @@ Overfull \hbox (3.83365pt too wide) in paragraph at lines 15--15
  \T1/pplj/m/n/10.95 (-20) (B) Short IN-DEL per-form-ance was also in-cluded. 
  []
 
-)
+
+Overfull \hbox (2.81357pt too wide) in paragraph at lines 24--24
+ [][] []\T1/pplj/m/n/10.95 (-20) Sensitivity of the neural net-work with tb-profiler 
+ []
+
+[14
+
+])
 \tf@lof=\write7
 \openout7 = `main.lof'.
 
- [14
-
-]
+ [15]
 Package tocbasic Info: character protrusion at lot deactivated on input line 44.
  (./main.lot)
 \tf@lot=\write8
 \openout8 = `main.lot'.
 
- [15] (./main.lol)
+ [16] (./main.lol)
 \tf@lol=\write9
 \openout9 = `main.lol'.
 
- [16]) [17] [18
-
-
-] (./Chapters/Introduction/Introduction.tex
+ [17]) [18] (./Chapters/Introduction/Introduction.tex
 Chapter 1.
 [1
+
+
 
 
 
@@ -1795,18 +1803,136 @@ Overfull \hbox (3.80617pt too wide) in paragraph at lines 82--83
  []
 
 [8]
-<figures/Screen Shot 2024-11-01 at 5.22.47 am.png, id=371, 572.1375pt x 658.46pt>
+<figures/Screen Shot 2024-11-01 at 5.22.47 am.png, id=427, 572.1375pt x 658.46pt>
 File: figures/Screen Shot 2024-11-01 at 5.22.47 am.png Graphic file (type png)
 <use figures/Screen Shot 2024-11-01 at 5.22.47 am.png>
 Package pdftex.def Info: figures/Screen Shot 2024-11-01 at 5.22.47 am.png  used on input line 108.
 (pdftex.def)             Requested size: 235.19897pt x 270.6837pt.
  [9]
-<figures/Screen Shot 2024-11-01 at 5.26.51 am.png, id=385, 594.22pt x 625.33624pt>
+<figures/Screen Shot 2024-11-01 at 5.26.51 am.png, id=441, 594.22pt x 625.33624pt>
 File: figures/Screen Shot 2024-11-01 at 5.26.51 am.png Graphic file (type png)
 <use figures/Screen Shot 2024-11-01 at 5.26.51 am.png>
 Package pdftex.def Info: figures/Screen Shot 2024-11-01 at 5.26.51 am.png  used on input line 116.
 (pdftex.def)             Requested size: 235.19897pt x 247.5156pt.
- [10 <./figures/Screen Shot 2024-11-01 at 5.22.47 am.png>] [11 <./figures/Screen Shot 2024-11-01 at 5.26.51 am.png>]) [12] (./FrontBackmatter/Bibliography.tex
+ [10 <./figures/Screen Shot 2024-11-01 at 5.22.47 am.png>] [11 <./figures/Screen Shot 2024-11-01 at 5.26.51 am.png>]) (./Chapters/methods/Methods.tex
+Chapter 2.
+[12]
+Overfull \hbox (23.8376pt too wide) in paragraph at lines 20--20
+|[]\T1/pplj/m/sc/10.95/80ls (-20) probabilistic im-ple-ment-a-tion of a resistance-prediction
+ []
+
+<figures/who_snps.pdf, id=459, 435.54718pt x 73.2336pt>
+File: figures/who_snps.pdf Graphic file (type pdf)
+<use figures/who_snps.pdf>
+Package pdftex.def Info: figures/who_snps.pdf  used on input line 29.
+(pdftex.def)             Requested size: 435.5461pt x 73.2334pt.
+
+Overfull \hbox (99.5461pt too wide) in paragraph at lines 29--30
+ [][] 
+ []
+
+<figures/er.drawio-1.pdf, id=460, 264.99pt x 522.03032pt>
+File: figures/er.drawio-1.pdf Graphic file (type pdf)
+<use figures/er.drawio-1.pdf>
+Package pdftex.def Info: figures/er.drawio-1.pdf  used on input line 36.
+(pdftex.def)             Requested size: 264.98935pt x 522.02904pt.
+[13
+
+
+ <./figures/who_snps.pdf>]
+<figures/filt.drawio.pdf, id=487, 551.1792pt x 546.12032pt>
+File: figures/filt.drawio.pdf Graphic file (type pdf)
+<use figures/filt.drawio.pdf>
+Package pdftex.def Info: figures/filt.drawio.pdf  used on input line 44.
+(pdftex.def)             Requested size: 336.0pt x 332.92458pt.
+ [14 <./figures/er.drawio-1.pdf>]
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 164.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 164.
+
+Overfull \hbox (35.81886pt too wide) in paragraph at lines 222--223
+ [][] 
+ []
+
+<figures/train.drawio.pdf, id=513, 551.1792pt x 139.4811pt>
+File: figures/train.drawio.pdf Graphic file (type pdf)
+<use figures/train.drawio.pdf>
+Package pdftex.def Info: figures/train.drawio.pdf  used on input line 230.
+(pdftex.def)             Requested size: 403.19897pt x 102.0353pt.
+
+Overfull \hbox (67.19897pt too wide) in paragraph at lines 230--231
+ [][] 
+ []
+
+) (./Chapters/Results/Results.tex
+Overfull \hbox (25.46417pt too wide) has occurred while \output is active
+ []|[]|
+ []
+
+[15 <./figures/filt.drawio.pdf>]
+Chapter 3.
+[16 <./figures/train.drawio.pdf>]
+<figures/sensitivity.pdf, id=563, 538.70131pt x 291.91685pt>
+File: figures/sensitivity.pdf Graphic file (type pdf)
+<use figures/sensitivity.pdf>
+Package pdftex.def Info: figures/sensitivity.pdf  used on input line 11.
+(pdftex.def)             Requested size: 336.0pt x 182.07787pt.
+<figures/specificity.pdf, id=564, 538.70131pt x 291.91685pt>
+File: figures/specificity.pdf Graphic file (type pdf)
+<use figures/specificity.pdf>
+Package pdftex.def Info: figures/specificity.pdf  used on input line 20.
+(pdftex.def)             Requested size: 336.0pt x 182.07787pt.
+ [17
+
+
+ <./figures/sensitivity.pdf>]
+<figures/f1.pdf, id=593, 538.59152pt x 291.77571pt>
+File: figures/f1.pdf Graphic file (type pdf)
+<use figures/f1.pdf>
+Package pdftex.def Info: figures/f1.pdf  used on input line 31.
+(pdftex.def)             Requested size: 336.0pt x 182.02989pt.
+<figures/who_confusion_matrices.pdf, id=594, 1272.10388pt x 714.40712pt>
+File: figures/who_confusion_matrices.pdf Graphic file (type pdf)
+<use figures/who_confusion_matrices.pdf>
+Package pdftex.def Info: figures/who_confusion_matrices.pdf  used on input line 55.
+(pdftex.def)             Requested size: 336.0pt x 188.69563pt.
+ [18 <./figures/specificity.pdf> <./figures/f1.pdf>]
+<figures/expert_rules_confusion_matrices.pdf, id=645, 1272.10388pt x 714.40712pt>
+File: figures/expert_rules_confusion_matrices.pdf Graphic file (type pdf)
+<use figures/expert_rules_confusion_matrices.pdf>
+Package pdftex.def Info: figures/expert_rules_confusion_matrices.pdf  used on input line 62.
+(pdftex.def)             Requested size: 336.0pt x 188.69563pt.
+<figures/filtered_expert_rules_confusion_matrices.pdf, id=646, 1272.10388pt x 714.40712pt>
+File: figures/filtered_expert_rules_confusion_matrices.pdf Graphic file (type pdf)
+<use figures/filtered_expert_rules_confusion_matrices.pdf>
+Package pdftex.def Info: figures/filtered_expert_rules_confusion_matrices.pdf  used on input line 69.
+(pdftex.def)             Requested size: 336.0pt x 188.69563pt.
+ [19 <./figures/who_confusion_matrices.pdf> <./figures/expert_rules_confusion_matrices.pdf>]
+<figures/who_learning_curves.pdf, id=734, 1156.32pt x 289.08pt>
+File: figures/who_learning_curves.pdf Graphic file (type pdf)
+<use figures/who_learning_curves.pdf>
+Package pdftex.def Info: figures/who_learning_curves.pdf  used on input line 78.
+(pdftex.def)             Requested size: 336.0pt x 83.99866pt.
+<figures/expert_rules_learning_curves.pdf, id=735, 1156.32pt x 289.08pt>
+File: figures/expert_rules_learning_curves.pdf Graphic file (type pdf)
+<use figures/expert_rules_learning_curves.pdf>
+Package pdftex.def Info: figures/expert_rules_learning_curves.pdf  used on input line 85.
+(pdftex.def)             Requested size: 336.0pt x 83.99866pt.
+<figures/filtered_expert_rules_learning_curves.pdf, id=736, 1156.32pt x 289.08pt>
+File: figures/filtered_expert_rules_learning_curves.pdf Graphic file (type pdf)
+<use figures/filtered_expert_rules_learning_curves.pdf>
+Package pdftex.def Info: figures/filtered_expert_rules_learning_curves.pdf  used on input line 92.
+(pdftex.def)             Requested size: 336.0pt x 83.99866pt.
+) (./Chapters/Discussion/Discussion.tex
+Chapter 4.
+[20 <./figures/filtered_expert_rules_confusion_matrices.pdf> <./figures/who_learning_curves.pdf> <./figures/expert_rules_learning_curves.pdf> <./figures/filtered_expert_rules_learning_curves.pdf>]) [21
+
+
+] [22
+
+
+] (./FrontBackmatter/Bibliography.tex
 Overfull \hbox (11.87854pt too wide) in paragraph at lines 16--16
 \T1/pplj/m/n/10.95 (-20) tens-ively drug-resistant tuber-cu-losis. An-ti-mi-crob Agents Chemother
  []
@@ -1821,14 +1947,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [13
+ [23
 
 
-
-
-] [14] [15] [16] [17]) [18]
+] [24] [25] [26] [27]) [28]
 Appendix A.
-[19
+[29
 
 
 
@@ -2048,27 +2172,46 @@ FrontBackmatter/Contents.tex
 Chapters/Introduction/Introduction.tex
 figures/Screen Shot 2024-11-01 at 5.22.47 am.png
 figures/Screen Shot 2024-11-01 at 5.26.51 am.png
+Chapters/methods/Methods.tex
+figures/who_snps.pdf
+figures/er.drawio-1.pdf
+figures/filt.drawio.pdf
+figures/train.drawio.pdf
+Chapters/Results/Results.tex
+figures/sensitivity.pdf
+figures/specificity.pdf
+figures/f1.pdf
+figures/who_confusion_matrices.pdf
+figures/expert_rules_confusion_matrices.pdf
+figures/filtered_expert_rules_confusion_matrices.pdf
+figures/who_learning_curves.pdf
+figures/expert_rules_learning_curves.pdf
+figures/filtered_expert_rules_learning_curves.pdf
+Chapters/Discussion/Discussion.tex
 FrontBackmatter/Bibliography.tex
    t1fvm.fd    2004/09/07 scalable font definitions for T1/fvm.
  ***********
+
+
+LaTeX Warning: There were multiply-defined labels.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 49358 strings out of 469006
- 990434 string characters out of 5454814
- 2031394 words of memory out of 5000000
- 76437 multiletter control sequences out of 15000+600000
- 762846 words of font info for 622 fonts, out of 8000000 for 9000
+ 50385 strings out of 469006
+ 1009245 string characters out of 5454814
+ 2059631 words of memory out of 5000000
+ 77290 multiletter control sequences out of 15000+600000
+ 789884 words of font info for 715 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 114i,22n,142p,11207b,2459s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/euler/eurb10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/fpl/fplrij8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (37 pages, 1122133 bytes).
+ 114i,22n,143p,11207b,2474s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/euler/eurb10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/fpl/fplrij8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on main.pdf (47 pages, 1426978 bytes).
 PDF statistics:
- 586 PDF objects out of 1000 (max. 8388607)
- 507 compressed objects within 6 object streams
- 126 named destinations out of 1000 (max. 500000)
- 148735 words of extra memory for PDF output out of 154059 (max. 10000000)
+ 1080 PDF objects out of 1200 (max. 8388607)
+ 842 compressed objects within 9 object streams
+ 181 named destinations out of 1000 (max. 500000)
+ 177576 words of extra memory for PDF output out of 184870 (max. 10000000)
 
