@@ -2507,6 +2507,27 @@
     <bcf:citekey order="95" intorder="1">modlin2021exact</bcf:citekey>
     <bcf:citekey order="96" intorder="1">marin2022benchmarking</bcf:citekey>
     <bcf:citekey order="97" intorder="1">modlin2021exact</bcf:citekey>
+    <bcf:citekey order="98" intorder="1">sra_infra_2022</bcf:citekey>
+    <bcf:citekey order="98" intorder="2">ena_infra_2024</bcf:citekey>
+    <bcf:citekey order="99" intorder="1">WHOcatalog</bcf:citekey>
+    <bcf:citekey order="100" intorder="1">WHOcatalog</bcf:citekey>
+    <bcf:citekey order="101" intorder="1">Walker2022</bcf:citekey>
+    <bcf:citekey order="101" intorder="2">WHOcatalog</bcf:citekey>
+    <bcf:citekey order="102" intorder="1">WHOcatalog</bcf:citekey>
+    <bcf:citekey order="103" intorder="1">WHOcatalog</bcf:citekey>
+    <bcf:citekey order="104" intorder="1">tseemann_snippy</bcf:citekey>
+    <bcf:citekey order="105" intorder="1">cingolani2012program</bcf:citekey>
+    <bcf:citekey order="106" intorder="1">sra_infra_2022</bcf:citekey>
+    <bcf:citekey order="106" intorder="2">ena_infra_2024</bcf:citekey>
+    <bcf:citekey order="107" intorder="1">miotto2018</bcf:citekey>
+    <bcf:citekey order="108" intorder="1">phelan2019integrating</bcf:citekey>
+    <bcf:citekey order="109" intorder="1">sra_infra_2022</bcf:citekey>
+    <bcf:citekey order="109" intorder="2">ena_infra_2024</bcf:citekey>
+    <bcf:citekey order="110" intorder="1">Bentley2008</bcf:citekey>
+    <bcf:citekey order="111" intorder="1">Jain2018</bcf:citekey>
+    <bcf:citekey order="112" intorder="1">phelan2019integrating</bcf:citekey>
+    <bcf:citekey order="113" intorder="1">gagneux2018</bcf:citekey>
+    <bcf:citekey order="114" intorder="1">freschi2021population</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

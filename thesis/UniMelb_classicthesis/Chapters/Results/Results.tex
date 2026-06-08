@@ -5,7 +5,24 @@
 
 \section{Model Performance}\label{results:sec:model_perf}
 
+\begin{itemize}
+  \item \textbf{Objective:} What task is being evaluated here, and on what dataset?
+  \item \textbf{Baseline:} What is the model being compared against?
+  \item \textbf{Roadmap:} What metrics will be shown to support that the model works?
+\end{itemize}
+
+
 \subsection{Sensitivity}
+\begin{enumerate}
+  \item \textbf{Context and Visual:} Re-states why the test was run and points immediately to the corresponding graphic. - "To evaluate [biological metric], [analytical tool/pipeline] was executed, revealing [general pattern] (Figure X)."
+  \item \textbf{High-Level Takeaway:} States the primary finding cleanly in plain English. - "[Feature A] demonstrated a [direction] correlation with [Feature B], modifying [metric] by [value] fold ([Statistical test identifier], [degrees of freedom] = [value], p = [value])."
+  \item \textbf{Core Evidence:} Backs up the takeaway using exact metrics, stats, and values. - combined above
+  \item \textbf{Resolution / Boundary:} Highlights the limits, outlier sequences, or edge cases. - "Conversely, this trend was absent in [Sub-population/Cluster X], which maintained an unchanged baseline value of [Value]."
+\end{enumerate}
+
+
+
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{figures/sensitivity.pdf}
@@ -15,6 +32,7 @@
 \end{figure}
 
 \subsection{Specificity}
+
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=\textwidth]{figures/specificity.pdf}
@@ -26,6 +44,7 @@
 \end{figure}
 
 \subsection{F1 Score}
+
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=\textwidth]{figures/f1.pdf}
@@ -38,7 +57,11 @@
 \subsection{Training and Efficiency}
 
 \section{Candidate Mutations}
-
+\begin{itemize}
+  \item \textbf{Objective:} What task is being evaluated here, and on what dataset?
+  \item \textbf{Baseline:} What is the model being compared against?
+  \item \textbf{Roadmap:} What metrics will be shown to support that the model works?
+\end{itemize}
 \subsection{First-line Drugs}
 
 \subsection{Second-line Drugs}
@@ -49,6 +72,7 @@
 
 \subsubsection{Group C}
 
+\subsection{Other drugs}
 
 \begin{figure}[H]
   \begin{center}
@@ -70,9 +94,6 @@
   \end{center}
   \caption{Confusion matrix for er+who+filt catalogue.}\label{fig:filtcm}
 \end{figure}
-
-\subsection{Training and Validation Convergence}
-
 \begin{figure}[H]
   \begin{center}
     \includegraphics[width=\textwidth]{figures/who_learning_curves.pdf}
@@ -91,7 +112,7 @@
   \begin{center}
     \includegraphics[width=\textwidth]{figures/filtered_expert_rules_learning_curves.pdf}
   \end{center}
-  \caption{Global learning curves for er+who catalogue.}\label{fig:erlr}
+  \caption{Global learning curves for er+who catalogue.}\label{fig:filerlr}
 \end{figure}
 
-
+\input{Chapters/Results/tb_tab.tex}
