@@ -1,0 +1,19 @@
+% Bibliography
+%*******************************************************
+\clearpage
+\phantomsection
+
+% 1. Set running page headers manually using standard LaTeX syntax
+\markboth{REFERENCES}{REFERENCES}
+
+% 2. Add the bibliography to your Table of Contents
+\addcontentsline{toc}{chapter}{References}
+
+% 3. Print the actual Chapter Title on the page using a clean style
+\chapter*{References}
+
+% 4. Print the references in scriptsize using a plain heading style
+\begingroup
+  \fontsize{8}{10}\selectfont 
+  \printbibliography[heading=none] % Completely bypasses all broken template headers
+\endgroup

@@ -1,0 +1,51 @@
+\contentsline {chapter}{Dedication}{ii}{section*.1}%
+\contentsline {chapter}{Abstract}{iii}{section*.2}%
+\contentsline {chapter}{Declaration}{iv}{section*.3}%
+\contentsline {chapter}{Preface}{iv}{section*.4}%
+\contentsline {chapter}{Acknowledgments}{vi}{section*.5}%
+\contentsline {chapter}{List of figures}{x}{section*.6}%
+\contentsline {chapter}{List of tables}{xi}{section*.7}%
+\contentsline {chapter}{\numberline {1}A long-expected party}{3}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Introduction}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Background and motivation}{4}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}The Treatment of Tuberculosis and the Critical Role of Detecting Drug Resistance}{5}{subsection.2.1.1}%
+\contentsline {subsubsection}{Treatment Regimens for Drug-Susceptible Tuberculosis}{5}{subsection.2.1.1}%
+\contentsline {subsubsection}{Treatment Regimens for Drug-Resistant Tuberculosis}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Drug Susceptibility Testing for Tuberculosis}{7}{subsection.2.1.2}%
+\contentsline {subsubsection}{Phenotypic Drug Susceptibility Testing (pDST)}{7}{subsection.2.1.2}%
+\contentsline {subsubsection}{Genotypic Drug Susceptibility Testing}{8}{subsection.2.1.2}%
+\contentsline {subsubsection}{Whole-Genome Sequencing in Drug Susceptibility Testing (WGS-DST)}{9}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Investigating Mutations in Masked Genomic Regions}{10}{subsection.2.1.3}%
+\contentsline {subsubsection}{Masking Practices in Mtb Genomic Analysis}{10}{subsection.2.1.3}%
+\contentsline {subsubsection}{The \textit {pe/ppe} Gene Family and Drug Resistance}{11}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Re-evaluating the Masking Approach}{12}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Research objectives}{15}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Contributions}{15}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Thesis structure}{15}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Methods}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Data acquisition and catalogue formation}{16}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}The WHO catalogue of mutations}{17}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Updating the WHO catalogue with expert rules}{17}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Augmenting updated catalogues}{18}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Resistance profiling and identification of False Negatives}{18}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Identifying resistance-conferring candidate variants}{20}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Probabilistic implementation of a resistance prediction tool}{20}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Network architecture and weights initisiatilisation}{22}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Training regime and optimisation}{22}{subsection.3.3.2}%
+\contentsline {chapter}{\numberline {4}Results}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Classification Performance}{27}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Training Performance and Convergence}{30}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}Candidate Mutations}{31}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Second-line Drugs}{34}{subsection.4.2.1}%
+\contentsline {subsubsection}{Group A}{34}{subsection.4.2.1}%
+\contentsline {subsubsection}{Group B}{34}{subsection.4.2.1}%
+\contentsline {subsubsection}{Group C}{35}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Other drugs}{36}{subsection.4.2.2}%
+\contentsline {chapter}{\numberline {5}Discussion}{43}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Model Performance}{43}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Ablation Study and Biological Significance}{43}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Candidate Variants}{43}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Limitations}{44}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Future Studies}{44}{section.5.5}%
+\contentsline {chapter}{References}{45}{section*.8}%
+\contentsline {chapter}{\numberline {A}Appendix A}{50}{chapter.1}%

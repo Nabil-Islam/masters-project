@@ -1,0 +1,106 @@
+%!TEX encoding = UTF-8 Unicode
+\documentclass[School=Unimelb]{Dissertate}
+
+%-------- Custom additions
+% For appendices in a chapter
+\usepackage{appendix}
+% Honestly I don't remember what this does but I'm too scared to remove it
+\usepackage{chngcntr}
+% Allows multiple rows/columns in tables
+\usepackage{multirow}
+% For template demo
+\usepackage{lipsum}
+
+\addbibresource{thesis.bib}
+% Table of contents depth
+\setcounter{tocdepth}{2}
+
+%-------- Process flows & tikz
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning}
+
+
+\author{Full Author Name}
+\begin{document}
+\graphicspath{{./figures/}}
+% the front matter
+\frontmatter
+\input{frontmatter/personalize.tex}
+\input{frontmatter/abstract.tex}
+\input{frontmatter/declaration.tex}
+\input{frontmatter/preface.tex}
+\input{frontmatter/thanks.tex}
+
+
+
+% include each chapter...
+%\setcounter{chapter}{-1}  % start chapter numbering at 0
+\chapter{A long-expected party}
+\label{chap:chap1}
+\input{chapters/Introduction/Introduction.tex}
+\input{chapters/Methods/Methods.tex}
+\input{chapters/Results/Results.tex}
+\input{chapters/Discussion/Discussion.tex}
+ 
+\singlespacing
+
+
+% ********************************************************************
+% Backmatter
+%*******************************************************
+% Bibliography
+\cleardoublepage
+\input{backmatter/Bibliography.tex}
+
+% Appendix
+\appendix
+% \renewcommand{\thechapter}{\alph{chapter}}
+\cleardoublepage
+% \part*{Appendix}
+\chapter{Appendix A}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=\textwidth]{figures/who_confusion_matrices.pdf}
+  \end{center}
+  \caption{Confusion matrix for 16 drugs for the WHO snp catalogue}\label{fig:whocm}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=\textwidth]{figures/expert_rules_confusion_matrices.pdf}
+  \end{center}
+  \caption{Confusion matrix for er+who catalogue.}\label{fig:ercm}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=\textwidth]{figures/filtered_expert_rules_confusion_matrices.pdf}
+  \end{center}
+  \caption{Confusion matrix for er+who+filt catalogue.}\label{fig:filtcm}
+\end{figure}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=\textwidth]{figures/who_learning_curves.pdf}
+  \end{center}
+  \caption{Global learning curves for who catalogue.}\label{fig:wholr}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=\textwidth]{figures/expert_rules_learning_curves.pdf}
+  \end{center}
+  \caption{Global learning curves for er+who catalogue.}\label{fig:erlr}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{./figures/plots/gatifloxacin_volcano.pdf}
+    \hfill
+    \includegraphics[width=0.45\textwidth]{./figures/plots/rifabutin_volcano.pdf}
+    \hfill
+\end{figure}
+
+\end{document}
