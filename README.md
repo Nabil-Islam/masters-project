@@ -9,4 +9,6 @@
 
 Code for this project is at [neural-tb-prof](https://github.com/Nabil-Islam/neural-tbprof)
 
-Final Presentation pdf can be found [here](https://github.com/Nabil-Islam/masters-project/blob/main/project_pres/slides.pdf)
+Final Presentation PDF can be found [here](https://github.com/Nabil-Islam/masters-project/blob/main/project_pres/slides.pdf)
+
+Working thesis can be found [here](https://github.com/Nabil-Islam/masters-project/blob/main/current_thesis/main.pdf)
