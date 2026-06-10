@@ -1,0 +1,44 @@
+
+\graphicspath{{Figures/Discussion}}
+
+\chapter{Discussion}\label{ch:discc}
+\begin{itemize}
+  \item \textbf{The Reminder:} Re-state the core biological/computational problem your thesis tackled
+  \item \textbf{The Headline Finding:} State your absolute biggest achievement without listing a wall of specific metrics.
+  \item \textbf{The Executive "Why":} Give a one-sentence conceptual reason for your success.
+\end{itemize}
+
+\section{Model Performance}
+\begin{itemize}
+  \item Why are they this way? Explain the mechanics behind the scores
+  \item Where does it fit? Compare this to the literature.
+\end{itemize}
+
+\section{Ablation Study and Biological Significance}
+\begin{itemize}
+  \item Why are they this way? Explain the mechanics behind the scores
+  \item Where does it fit? Compare this to the literature.
+\end{itemize}
+
+\section{Candidate Variants}
+
+The $katG$ C>G SNP has biological grounding, as $katG$ encodes a catalase-peroxidase that activates the prodrug for isoniazid [CITE]. With non-synonymous variants in $katG$ being a substantial reservoir for resistance-conferring variants in clinical samples, an uncatalogued variant that is both significant and associated with resistance, and produced a $-6.26\%$ change in sensitivity when ablated poses as a high-priority variant warranting further characterisation and investigation.  
+
+The `gene-not-found' C>T variant also showed a considerable drop in sensitivity of $4.56\%$, and has potential for investigation as a resistance-marker. This variant is located 14bp upstream of $fabG1$, an enzyme involved in mycolic acid biosynthesis, and more importantly, a gene that contains resistance-conferring variants for isoniazid and ethionamide \cite{valafar2021systematic}. Given an approximate 5$\%$ sensitivity dip post-ablation, and proximity to $fabG1$, this variant warrants further investigation. 
+
+Lastly, an $rpoB$ C>T SNP yielded a drop in sensitivity of 0.73$\%$. This is very likely a confounder, as $rpoB$ encodes the $\beta$ subunit of RNA polymerase [CITE], which is the target for rifampicin. This appearance is likely because MDR-TB strains carry resistance to both rifampicin and isoniazid. Future weight matrix revisions for isoniazid warrants removal to prevent FPs. 
+
+This validates our internal pipelines, which identified the correct gene and location. The enrichment of $rpoB$ C>T annotated SNP, is one of the strongest candidates for validation from the FN subset. All $rpoB$ variants close to, or within RRDR (codons 426-452). 
+
+
+Multiple SNPs at distinct positions, indicates possible diverse resistant variants over a single dominant mutation. This is consistent with literature surrounding clincinal ethambutol resistance which report a wide spectrum of $embB$ variants. These candidates are of high-priority for validation. Furthermore, variants appeared in auxiliary genes involved in $embB$ resistance such as $embC$ and $ubiA$.
+\section{Limitations}
+\begin{itemize}
+  \item Why are they this way? Explain the mechanics behind the scores
+  \item Where does it fit? Compare this to the literature.
+\end{itemize}
+\section{Future Studies}
+\begin{itemize}
+  \item Why are they this way? Explain the mechanics behind the scores
+  \item Where does it fit? Compare this to the literature.
+\end{itemize}

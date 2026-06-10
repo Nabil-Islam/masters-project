@@ -1,5 +1,0 @@
-[0] Config.pm:328> INFO - This is Biber 2.21
-[0] Config.pm:331> INFO - Logfile is 'Bibliography.bib.blg'
-[34] biber-darwin:342> INFO - === Mon Jun  1, 2026, 19:33:17
-[61] Utils.pm:479> ERROR - Cannot find 'Bibliography.bib.bcf'!
-[61] Biber.pm:137> INFO - ERRORS: 1
