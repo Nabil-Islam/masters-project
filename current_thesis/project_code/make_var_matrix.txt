@@ -1,0 +1,143 @@
+This script developed the variant feature matrix:
+
+❯ cat prep.py
+import pandas as pd
+import json
+from cyvcf2 import VCF
+from tqdm import tqdm
+from collections import Counter
+
+df = pd.read_csv(
+    '/data/scratch/projects/punim1703/false_negative/old_tbprof/resources/data/NEW_classifications.csv')
+
+run_dict = {}
+
+for classif in ['TN', 'TP', 'FN', 'FP']:
+    mask = df['classification'] == classif
+    # group by drug, collect all 'run' values into a list
+    run_dict[classif] = (
+        df.loc[mask, ['drug', 'run']]
+          .groupby('drug')['run']
+          .apply(list)
+          .to_dict()
+    )
+
+'''TN_runs = {run for drug in run_dict['TN'] for run in run_dict['TN'][drug]}
+
+runs_to_rem = []
+# Remove runs common between FN and TN
+for drug in list(set(run_dict['FN'].keys()) & set(run_dict['TN'].keys())):
+    for run in run_dict['FN'][drug]:
+        if run in TN_runs:
+            runs_to_rem.append(run)
+
+for drug in list(set(run_dict['FN'].keys()) & set(run_dict['TN'].keys())):
+    for run in run_dict['FN'][drug]:
+        if run in runs_to_rem:
+            run_dict['FN'][drug].remove(run)
+
+    assert run_dict['TN'][drug] != run_dict['FN'][drug]'''
+
+with open("/data/scratch/projects/punim1703/false_negative/old_tbprof/results/essentials/NEW_updated_runs.json", 'w') as f:
+    json.dump(run_dict, f, indent=4)
+
+# Collect all the snps
+
+drugs = df['drug'].unique()
+
+runs = []
+with open('/data/scratch/projects/punim1703/nn_tb/REVISION/results/vcf_list.txt') as f:
+    for vcf in f:
+        runs.append(vcf.strip('\n'))
+
+
+snp_list = []
+
+for run in tqdm(runs, desc='harvesting snps', total=len(runs)):
+    vcf = VCF(run)
+
+    for variant in vcf:
+        pos = variant.start + 1
+        ref = variant.REF
+
+        for alt in variant.ALT:
+            snp = f'{pos}_{ref}_{alt}'
+            snp_list.append(snp)
+
+snp_count = Counter(snp_list)
+
+final_snps = []
+
+for snp, count in snp_count.items():
+    if count >= 2:
+        final_snps.append(snp)
+
+
+with open("/data/scratch/projects/punim1703/false_negative/old_tbprof/results/essentials/NEW_snps.txt", 'w') as f:
+    for snp in final_snps:
+        f.write(snp+'\n')
+
+❯ cat makematrix.py
+import pandas as pd
+import json
+import numpy as np
+from cyvcf2 import VCF
+from tqdm import tqdm
+from pathlib import Path
+import scipy.sparse as sp
+
+df = pd.read_csv(
+    '/data/scratch/projects/punim1703/false_negative/old_tbprof/resources/data/NEW_classifications.csv')
+
+with open("/data/scratch/projects/punim1703/false_negative/old_tbprof/results/essentials/NEW_updated_runs.json") as f:
+    run_dict = json.load(f)
+
+snp_path = Path(
+    "/data/scratch/projects/punim1703/false_negative/old_tbprof/results/essentials/NEW_snps.txt")
+with open(snp_path) as f:
+    snp_list = f.read().splitlines()
+
+snp_lu = {snp: i for i, snp in enumerate(snp_list)}
+
+drugs = df['drug'].unique()
+
+for drug in drugs:
+    # Create drug dir
+    dir_path = Path(
+        f'/data/scratch/projects/punim1703/false_negative/old_tbprof/results/matrices/{drug}')
+    dir_path.mkdir(parents=True, exist_ok=True)
+
+    for classif in ['FN', 'FP', 'TN', 'TP']:
+
+        if run_dict[classif].get(drug):
+            runs = run_dict[classif][drug]
+        else:
+            continue
+
+        rows = []
+        cols = []
+
+        for i, run in tqdm(enumerate(runs), desc='going through samples', total=len(runs)):
+            vcf = VCF(
+                f'/data/scratch/projects/punim1703/tbvcf/results/variants/{run}/{run}.masked.vcf.gz')
+
+            for variant in vcf:
+                pos = variant.start + 1
+                ref = variant.REF
+                for alt in variant.ALT:
+                    snp = f'{pos}_{ref}_{alt}'
+                    if snp in snp_lu.keys():
+                        rows.append(i)
+                        cols.append(snp_lu[snp])
+
+        rows = np.array(rows, dtype=np.int32)
+        cols = np.array(cols, dtype=np.int32)
+        data = np.ones(len(rows), dtype=np.int8)
+
+        matrix = sp.coo_matrix(
+            (data, (rows, cols)),
+            shape=(len(runs), len(snp_lu.keys()))
+        )
+
+        file_path = Path(dir_path/f'{classif}_{drug}_snps.npz')
+        sp.save_npz(file_path, matrix)

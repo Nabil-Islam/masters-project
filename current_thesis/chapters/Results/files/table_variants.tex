@@ -1,0 +1,78 @@
+% !TeX root = ../main.tex
+% ============================================================
+% REQUIRED PACKAGES -- add to your preamble if not present:
+%   \usepackage{booktabs}
+%   \usepackage{longtable}
+%   \usepackage{array}
+%   \usepackage{amsmath}
+%   \usepackage{multirow}
+% ============================================================
+% --- BEGIN TABLE SNIPPET ---
+\begingroup  % <- local scope; all settings below are restored after \endgroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\newlength{\colW}
+\setlength{\colW}{\dimexpr\linewidth - 24pt\relax}% subtract 3 cols * 2 * 4pt tabcolsep
+\newcommand{\tbsecrow}[1]{%
+  \midrule[0.4pt]
+  \multicolumn{3}{l}{\rule{0pt}{9pt}\textbf{\small #1}}\\[1pt]
+}
+\begin{longtable}{%
+  >{\centering\arraybackslash}p{0.060\colW}%   Drug
+  >{\raggedright\arraybackslash}p{0.120\colW}% Gene
+  >{\raggedright\arraybackslash}p{0.820\colW}% Variant (stats inline)
+}
+\caption{Annotated M.tb variants that were filtered, and present in genes
+involved in drug-resistance mechanisms, cross-resistance, and \ppe genes
+associated with first-line epistasis and M.tb virulence. For each drug,
+the gene and associated variants are listed. For each variant, listed are the proportion of False Negative containing the variant, False Negative proportion (FNP), proportion of all resistant samples missing (RSM) the variant, and the change in sensitivity post-ablation (if the variant was involved in the ablation study), followed by the association statistics $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$. Variants marked $\dagger$ have an infinite odds ratio (complete separation).}
+\label{tab:first-line}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endfirsthead
+\caption*{Table~\ref{tab:first-line} \textit{(continued)}}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\small\textit{continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+% -------------------------------------------------------
+\tbsecrow{Rifampicin}
+& \textit{PPE60}	& \texttt{3894503\_GGCC>G} (89\%, 2\%, --) [13.24, 2.67], \texttt{3895400\_A>C} (71\%, 2\%, --) [7.55, 2.17]\\
+& \textit{PPE54}	& \texttt{3733405\_G>A} (73\%, 2\%, --) [11.99, 2.2]\\
+% -------------------------------------------------------
+\tbsecrow{Isoniazid}
+& \textit{katG}	& \texttt{2155300\_G>A}$^{\dagger}$ (100\%, 4\%, --) [5.73, $\infty$], \texttt{2155417\_G>C}$^{\dagger}$ (100\%, 4\%, --) [8.59, $\infty$], \texttt{2155546\_T>C} (80\%, 4\%, --) [5.04, 2.02], \texttt{2155819\_T>C}$^{\dagger}$ (100\%, 4\%, --) [7.16, $\infty$], \texttt{2155631\_A>G}$^{\dagger}$ (100\%, 4\%, --) [11.46, $\infty$], \texttt{2155687\_T>C} (88\%, 4\%, --) [9.14, 2.26], \texttt{2155418\_G>C} (86\%, 4\%, --) [7.76, 2.2], \texttt{2154661\_C>T}$^{\dagger}$ (100\%, 4\%, --) [7.16, $\infty$], \texttt{2154016\_C>T} (90\%, 4\%, --) [11.91, 2.37]\\
+& \textit{PPE54}	& \texttt{3733476\_A>AG} (37\%, 4\%, --) [5.5, 1.18], \texttt{3733405\_G>A} (73\%, 4\%, --) [9.29, 1.84]\\
+& \textit{inhA}	& \texttt{1674782\_T>C}$^{\dagger}$ (100\%, 4\%, --) [5.73, $\infty$]\\
+& \textit{PPE60}	& \texttt{3894503\_GGCC>G} (89\%, 4\%, --) [10.52, 2.32]\\
+% -------------------------------------------------------
+\tbsecrow{Ethambutol}
+& \textit{ubiA}	& \texttt{4269271\_A>G}$^{\dagger}$ (100\%, 2\%, --) [8.48, $\infty$]\\
+& \textit{PPE60}	& \texttt{3894484\_C>T} (62\%, 2\%, --) [6.75, 1.91], \texttt{3894503\_GGCC>G} (89\%, 2\%, --) [12.63, 2.6]\\
+& \textit{PE\_PGRS7}	& \texttt{672683\_G>A} (80\%, 2\%, --) [6.09, 2.29], \texttt{673482\_C>T}$^{\dagger}$ (100\%, 2\%, --) [5.09, $\infty$]\\
+& \textit{PE\_PGRS6}	& \texttt{624157\_T>G} (88\%, 2\%, --) [10.98, 2.54]\\
+& \textit{PPE55}	& \texttt{3745906\_A>G} (65\%, 2\%, --) [14.64, 1.96], \texttt{3744603\_T>G} (39\%, 2\%, --) [7.46, 1.5], \texttt{3747326\_C>T} (39\%, 2\%, --) [7.46, 1.5], \texttt{3752124\_G>A} (40\%, 2\%, --) [6.55, 1.51]\\
+& \textit{embC}	& \texttt{4241022\_C>T}$^{\dagger}$ (100\%, 2\%, --) [15.28, $\infty$]\\
+& \textit{PE\_PGRS19}	& \texttt{1188873\_C>G}$^{\dagger}$ (100\%, 2\%, --) [5.09, $\infty$]\\
+& \textit{PE\_PGRS4}	& \texttt{336616\_C>T} (38\%, 2\%, --) [6.35, 1.47]\\
+& \textit{PPE54}	& \texttt{3733405\_G>A} (75\%, 2\%, --) [12.96, 2.17]\\
+& \textit{embB}	& \texttt{4247847\_A>G} (90\%, 2\%, --) [14.29, 2.65]\\
+% -------------------------------------------------------
+\tbsecrow{Pyrazinamide}
+& \textit{PE\_PGRS4}	& \texttt{336635\_CCCGCCGTTG>C} (50\%, 3\%, --) [5.09, 1.47], \texttt{338688\_C>T} (71\%, 3\%, --) [6.13, 1.87]\\
+& \textit{PPE54}	& \texttt{3734621\_C>T} (56\%, 3\%, --) [5.38, 1.57], \texttt{3729592\_G>A}$^{\dagger}$ (100\%, 3\%, --) [5.95, $\infty$]\\
+& \textit{PPE55}	& \texttt{3752065\_A>C}$^{\dagger}$ (100\%, 3\%, --) [5.95, $\infty$], \texttt{3752419\_C>G} (62\%, 3\%, --) [5.72, 1.7]\\
+& \textit{PE\_PGRS9}	& \texttt{836018\_G>A} (80\%, 3\%, --) [5.26, 2.08]\\
+& \textit{PPE60}	& \texttt{3894914\_C>G}$^{\dagger}$ (100\%, 3\%, --) [5.95, $\infty$]\\
+
+\end{longtable}
+\endgroup
+% --- END TABLE SNIPPET ---

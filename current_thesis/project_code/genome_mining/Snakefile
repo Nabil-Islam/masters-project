@@ -1,0 +1,144 @@
+from collections import defaultdict
+from pathlib import Path
+from itertools import product
+from snakemake.utils import min_version
+import pandas as pd
+import glob
+
+# =====================================
+# Workflow config items
+configfile: "config/config.yaml"
+
+WORKFLOW = Path("workflow").resolve()
+RULES = WORKFLOW / "rules"
+ENVS = WORKFLOW / "envs"
+SCRIPTS = WORKFLOW / "scripts"
+RESULTS = Path("results").resolve()
+PLOTS = RESULTS / "plots"
+TABLES = RESULTS / "tables"
+CAPTIONS = WORKFLOW / "report"
+RESOURCES = Path("resources").resolve()
+LOGS = Path("logs/rules").resolve()
+BENCH = RESULTS / "benchmark"
+CONTAINERS = config["containers"]
+GB = 1_024
+MIN_ILLUMINA_COV = config["min_cov"]
+MIN_NANOPORE_COV = config["min_cov"]
+
+TECHS = ["nanopore", "illumina"]
+TOOLS = ["tbprofiler"]
+
+inclusion_expr = f"illumina_covg >= {MIN_ILLUMINA_COV} and nanopore_covg >= {MIN_NANOPORE_COV} and lineage != 'mixed'"
+h2h_df = pd.read_csv(config["h2h_samplesheet"]).query(inclusion_expr)
+
+illumina_df = pd.read_csv(
+    config["illumina_samplesheet"], low_memory=False, index_col="run"
+)
+illumina_df["run"] = illumina_df.index
+# illumina_query = "run in @illumina_subsample_runs or delamanid.notna()"
+# illumina_df.query(illumina_query, inplace=True)
+illumina_depth_df = illumina_df.query("(levofloxacin.notna() and streptomycin.notna() and kanamycin.isna() and ofloxacin.notna() and pyrazinamide.notna()) or (delamanid.notna() and pyrazinamide.notna() and levofloxacin.isna())")
+ont_df = pd.read_csv(config["nanopore_samplesheet"], index_col="run", low_memory=False)
+
+# =====================================
+target_files = set()
+for tech in TECHS:
+  target_files.add(RESULTS / f"amr_predictions/tbprofiler/{tech}/summary.csv")
+
+# =====================================
+rule all:
+    input:
+        target_files, 
+
+# =====================================
+
+rule download_verify_predict:
+    output:
+        report=RESULTS / "amr_predictions/tbprofiler/{tech}/{proj}/{sample}/{run}/results/{run}.results.json",
+        run_info=RESULTS / "validate/{tech}/{proj}/{sample}/{run}/run_info.tsv",
+    log:
+        LOGS / "download_verify_predict/{tech}/{proj}/{sample}/{run}/{run}.log",
+    conda:
+        ENVS/'tbprofiler.yaml'
+    threads: 4 
+    resources:
+        mem_mb=lambda wildcards, attempt: attempt * int(8 * GB),
+        runtime="4h"
+    params:
+        db="ena",
+        fq_opts="--verbose",
+        tb_opts="--txt --no_trim -p {run}",
+        outdir=lambda wildcards, output: Path(output.report).parent.parent,
+        script_dir=SCRIPTS,
+        res_dir=RESULTS
+    group:
+        "qc"
+    shell:
+        """
+        tmpdir=$(mktemp -d)
+        trap 'rm -rf "$tmpdir"' EXIT
+
+        cd "$tmpdir"
+
+        fastq-dl {params.fq_opts} -a {wildcards.run} --provider {params.db} 2>> {log}
+
+        reads=(*.fastq.gz)
+
+        if [ ${{#reads[@]}} -lt 1 ]; then
+           fastq-dl {params.fq_opts} -a {wildcards.run} --provider sra 2>> {log}
+        fi 
+
+        python3 {params.script_dir}/validate_run_info.py fastq-run-info.tsv {wildcards.run} {wildcards.tech} {params.res_dir}
+
+        exec 2> {log} # send all stderr from this script to the log file
+
+        reads=(*.fastq.gz)
+
+        run_acc={wildcards.run}
+        run_info=run_info.tsv 
+
+        if [ ${{#reads[@]}} -eq 2 ]; then
+            input_arg=("-1" "${{reads[0]}}" "-2" "${{reads[1]}}")
+        else
+            input_arg=("-1" "${{reads[@]}}")
+        fi
+
+        tb-profiler profile "${{input_arg[@]}}" {params.tb_opts} -t {threads} --platform {wildcards.tech}
+        
+        mkdir -p $(dirname {output.report})
+        mkdir -p $(dirname {output.run_info})
+
+        mv $tmpdir/results/{wildcards.run}.results.json {output.report}
+        mv run_info.tsv {output.run_info}
+
+        """
+
+def infer_tbprofiler_reports(wildcards):
+    if wildcards.tech == "illumina":
+        df = illumina_df
+    else:
+        df = ont_df
+
+    files = []
+    for run, row in df.iterrows():
+        proj = row["bioproject"]
+        sample = row["biosample"]
+        p = (
+            RESULTS
+            / f"amr_predictions/tbprofiler/{wildcards.tech}/{proj}/{sample}/{run}/results/{run}.results.json"
+        )
+        files.append(p)
+
+    return files
+
+rule combine_tbprofiler_reports:
+    input:
+        reports=infer_tbprofiler_reports,
+    output:
+        report=RESULTS / "amr_predictions/tbprofiler/{tech}/summary.csv",
+    log:
+        LOGS / "combine_tbprofiler_reports/{tech}.log",
+    resources:
+        mem_mb=GB,
+    script:
+        str(SCRIPTS / "combine_tbprofiler_reports.py")

@@ -1,0 +1,30 @@
+{
+    "amikacin": {},
+    "bedaquiline": {},
+    "capreomycin": {},
+    "clofazimine": {
+        "4326333_C_G": [
+            "11.08%",
+            "ethA",
+            "C>G",
+            "0.22%"
+        ],
+        "3634487_G_A": [
+            "3.67%",
+            "Rv3254",
+            "G>A",
+            "0.57%"
+        ]
+    },
+    "delamanid": {},
+    "ethambutol": {},
+    "ethionamide": {},
+    "isoniazid": {},
+    "kanamycin": {},
+    "levofloxacin": {},
+    "linezolid": {},
+    "moxifloxacin": {},
+    "pyrazinamide": {},
+    "rifampicin": {},
+    "streptomycin": {}
+}

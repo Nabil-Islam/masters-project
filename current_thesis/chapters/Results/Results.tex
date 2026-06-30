@@ -1,5 +1,6 @@
 % !TeX root = ../main.tex
 \graphicspath{{Figures/Results}}
+\sloppy
 
 \chapter{Results}\label{ch:results}
 
@@ -41,9 +42,8 @@ The specificity-sensitivity trade-off is reflected in the F1 scores (Figure~\ref
   \begin{center}
     \includegraphics[width=\textwidth]{figures/f1.pdf}
   \end{center}
-  \caption{F1 scores of the neural networks, with F1 being the balanced average between specificity and sensitivity.
-  In this plot, TB-profiler is used as a baseline, colored in blue, and the untrained networks with shown with hollow
-  circles. The trained models are shown with filled circles.}\label{fig:f1}
+  \caption{F1 scores of the neural networks, with F1 being the balanced average between specificity and sensitivity. In this plot, TB-profiler is used as a baseline, colored in blue, and the untrained networks with shown with hollow circles. The trained models are shown with filled circles.}
+  \label{fig:f1}
 \end{figure}
 
 \subsection{Training Performance and Convergence}
@@ -62,41 +62,75 @@ F1 score replicated the same pattern of immediate ascent followed by plateau, wi
   \caption{Global learning curves for er+who catalogue.}\label{fig:filerlr}
 \end{figure}
 
+\input{chapters/Results/files/model_metrics.tex}
+
 \section{Candidate Mutations}
-As per the filtering process outlined in Section [REF], variants from FN samples that were statistically significantly ($-log_{10}(p)>5$) and associated with resistance ($log_{10}(OR)>0$) were selected. Following selection, they were assesed for their inclusion in known lineage markers and in the current ER-updated WHO catalogue scheme. 
+As per the filtering process outlined in Section~\ref{ch:methods}, variants from FN samples that were statistically significantly ($-log_{10}(p)>5$) and associated with resistance ($log_{10}(OR)>0$) were selected. Following selection, they were assesed for their inclusion in known lineage markers and in the current ER-updated WHO catalogue scheme. 
 
-Following selection, these variants met two fates: inclusion in what would become WHO+ER+Filtered weight scheme, or for further assessment regarding their candidature as a novel resistance-conferring variant. In this section, for all anti-TB drugs in this dataset, the variants that passed the filtering protocol are displayed in volcano plots in the figures below. The plots are displayed with the $log_{10}(OR)$ in the $x$-axis and the $-log_{10}(p)$ in $y$-axis that were produced during the Fisher's exact test, where the FN samples were `experimental' group and TN the control. The significance and association thresholds are drawn in each plot, creating four quadrants. Top-left houses significant variants not associated with resistance (blue), top-right houses variants that are both associated with resistance and significant (red). Furthermore, the variants the passed the filtering protocols are encircled by a black border (red and black border). Green markers in the graph represent samples with an infinite OR or p-value, due to the variant being present exclusively in resistant or susceptible samples. Variants that produced a sensitivity drop larger than or equal to $5\%$ are annotated, with their gene, polymorphism, and change in sensitivity ($\Delta$Sensitivity). This provides a measurement of the variant's independent predictive contribution, and therefore these variants are of highest priority for validation. The lower left and right quadrants show variants not associated and associated with resistance, but not significant.
+Following selection, these variants became part of the WHO+ER+Filtered weight scheme, and their candidature for validation was assesed. In this section, for all anti-TB drugs in this dataset, the variants that passed the filtering protocol are displayed in volcano plots in the figures below. The plots are displayed with the $log_{10}(OR)$ in the $x$-axis and the $-log_{10}(p)$ in $y$-axis that were produced during the Fisher's exact test, where the FN samples were `experimental' group and TN the control. The significance and association thresholds are drawn in each plot, creating four quadrants. Top-left houses significant variants not associated with resistance (blue), top-right houses variants that are both associated with resistance and significant (red). Furthermore, the variants the passed the filtering protocols are encircled by a black border (red and black border). Green markers in the graph represent samples with an infinite OR or p-value, due to the variant being present exclusively in resistant or susceptible samples. Variants that produced a sensitivity drop larger than or equal to $5\%$ are annotated, with their gene, polymorphism, and change in sensitivity ($\Delta$Sensitivity). This provides a measurement of the variant's independent predictive contribution, and therefore these variants are of highest priority for validation. The lower left and right quadrants show variants not associated and associated with resistance, but not significant.
 
-Certain volcano plot annotations, and more broadly, filtered variants do not appear to have a name and are deemed the moniker `gene-not-found`. This not suggest an intergenic region, as it has its own annotation, but rather the variant position lacks a human-readable $\texttt{gene=}$ attribute. This tag is common for hypothetical proteins with no assigned gene symbol, \ppe family genes with just a locus tag, and non-coding RNA. This issue can be rectified by locus tag cross-referencing with the TubercuList or PATRIC database [CITE]. They are not discarded as variants in `gene-not-found` locations may be in proximity of genes housing resistance-conferring variants. Resolution of these unknown genes is of high priority for variants that dropped sensitivity steeply post-ablation.
+Furthermore, variants located in genes associated with canonical resistance and cross resistance mechanisms are listed. Alongside, the percentage of FN samples housing the variant (FNP) and the percentage of all resistant samples missing the variant (RSM) are listed. PE/PPE gene variants present for each drug are also listed with their FNP and RSM. The PE/PPE genes associated with epistasis with first-line drug-target genes and M.tb virulence are listed. 
 
 \subsection*{First-line Drugs}
+The first-line drugs, RIF, INH, EMB, PZA, produced the largest numbers of variants, indicated by their populated volcano plots (Figure~\ref{fig:1st}). By gross volume of significant variants, EMB and PZA took lead with respective 4,000 and 3,900 variants identified. In contrast, RIF and INH displayed more modest yields of 1,400 and 1,900 variants respectively. Four all four drugs, filtered variants spanned canonical resistance, and cross-resitance genes, alongside epistatic and virulent PE/PPE gene loci. PZA posed a notable exception within this class: despite producing the largest number of significant resistance-associated variants, none of the variants passed the sensitivity threshold in the ablation study. 
 
-As per Figure~\ref{fig:1st}, the first-line anti-TB agents produced the most-dense plots across all drug classes. Isoniazid, rifampicin, ethambutol and pyrazinamide, displayed many significant variants associated with resistance, highlighted by dense top-right quadrants. Furthermore, on average, the first-line drugs displayed the most outlined variants in the top-right quadrant. 
+\subsubsection{Rifampicin (RIF)}
+The Rifampicin-False Negative (RIF-FN) volcano plot (Figure~\ref{fig:1st}) supplied 1,380 significant resistance-associated variants, with 454 variants passing filtering protocols. 3 out of 484 variants were identified in the PE/PPE gene family ($PPE60$ and $PPE54$).
+ 
+None of the PE/PPE variants contributed sensitivity drops during the ablation study. $PPE60$ retained two variants post-filtering, with \texttt{3894503\_GGCC>G} deletion being more significant ($-\log_{10}(p)=13.24$) and associated with resistance ($log_{10}(\text{OR})=2.67$). The deletion is present in the overwhelming majority of RIF-FNs (FNP=89\%) and 2\% of RIF-R samples lacked it. The second $PPE60$ SNV, \texttt{3895400\_A>C} harbored similar significance ($-\log_{10}(p)=7.55$) and odds ratio ($log_{10}(\text{OR})=2.17$) with presence in the majority of RIF-FNs (FNP=71\%) and absence 2\% in RIF-R samples. $PPE54$ produced one variant \texttt{3733405\_G>A} of high significance ($-\log_{10}(p)=11.99$), and resistance-association ($log_{10}(\text{OR})=2.2$). The variants was present in 73\% of RIF-FNs and absent in 2\% of RIF-R samples.
 
-For isoniazid, the variants that were highlighted from the ablation process were, \textit{katG} C>G, yielding a sensitivity drop of $6.26\%$ when ablated. Furthermore, a `gene not found', a genomic coordinate that is unnamed, had a C>T substitution with a sensitivity drop of $4.56\%$ when ablated. Lastly, an $rpoB$ C>T SNP, in a gene that encodes the drug-target for rifampicin showed an almost borderline decrease in sensitivity of $0.73\%$.
+Out of the 454 filtered variants, 3 variants occured in loci of interest and displayed decent metrics, making them candidates for downstream analysis. 
 
-For rifampcin, all annotated variants were located in $rpoB$, the drug-target encoding gene for rifampicin. First of the annotated candidates, $rpoB$ C>T produced a 14.99$\%$ sensitivity drop when ablated. Furthermore, the SNP had approximate $-log_{!0}(p) \approx 120$ and $log_{10}(OR) > 3$, highlighting a 1000-fold enrichment in resistant sample, making it one of the largest sensitivity contributing variants of the first-line drugs. This SNP is followed by $rpoB$ A>T ($\Delta$Sensitivity = 3.37$\%$), $rpoB$ C>G ($\Delta$Sensitivity = 1.22$\%$) and $rpoG$ C>T (different position) ($\Delta$Sensitivity = 1.26$\%$) which is denoted by green box.
+\subsubsection{Isoniazid (INH)}
+The variants from INH-False Negatives (INH-FNs) are displayed on the volcano plot (Figure~\ref{fig:1st}). 1,440 variants associated with resistance were produced, 338 of which passed the filtering protocols. Filtered variants were found in INH canonical resistance genes: $katG$ - 9 variants and $inhA$ - 1 variant. PE/PPE variants were found in $PPE54$ (2 variants) and $PPE60$ (1 variant). Overall, the dataset showed 6 variants exhibiting complete separation.  
 
-Ethambutol yielded the most diverse set of ablated variants of the first line drugs. All annotated variants were in $embB$, drug-target encoding gene for Ethambutol, which is an arabinosyltransferase, essential for arabionogalactan synthesis [CITE]. The filtered variants that met or exceeded the sensitivity-drop threshold were $embB$ A>G (Position= 4247429, $\Delta$Sensitivity= 2.56$\%$, FNP= 95$\%$, RSM= 2$\%$), A>G (Position = 4247847, $\Delta$Sensitivity= 0.66$\%$, FNP= 90$\%$, RSM= 2$\%$), G>C ($\Delta$Sensitivity= 0.97$\%$, FNP= 80$\%$, RSM= 2$\%$), G>A ($\Delta$Sensitivity= 1.05$\%$, FNP=) and A>C ($\Delta$Sensitivity= 1.77$\%$, FNP= 100$\%$, RSM= 2$\%$, green marker) (Figure, Table). Two highly significant SNPs $rpoB$ C>T ($\Delta$Sensitivity= 2.33$\%$) and $katG$ C>G ($\Delta$Sensitivity= 0.97$\%$) were observed. These are likely confounders as the gene products of $rpoB$ or $katG$ are not involved in ethambutol's mechanism of action. Although they are highly significant (p-values $\sim 10^{-140}$) compared to $embB$ variants ($5 \leq$ p-values $\leq 60$), they have relatively modest association with ethambutol resistance (10-fold associated with resistance compared to $embB \geq 10$ with resistance). Additionally, variants in the \ppe gene family were observed with variants in $PE-PGRS$4, 6, 7, 9, and 19 and $PPE$54, 55, and 60 (Table).
+$katG$ variants composed the most statistically dominant cluster among first-line drugs. Of the 9 variants, however, none passed the ablation sensitivity threshold. Five of nine  $katG$ variants  showed complete separation ($log_{10}(\text{OR})=$inf), listed by lowering significance: 
+\texttt{2155631\_A>G} ($-\log_{10}(p)=11.46$, RSM=4\%), \texttt{2155417\_G>C} ($-\log_{10}(p)=8.59$, RSM=4\%), \texttt{2154661\_C>T} and \texttt{2155819\_T>C} ($-\log_{10}(p)=7.16$, RSM=4\% for both), and \texttt{2155300\_G>A} ($-\log_{10}(p)=5.73$ and RSM 4\%). The remaining variants of finite odds ratio were all similar with \texttt{2154016\_C>T} being the most significant ($-\log_{10}(p)=11.91$, $log_{10}(\text{OR})=2.37$, FNP=90\%, RSM=4\%), followed by \texttt{2155687\_T>C} ($-\log_{10}(p)=9.14$, $log_{10}(\text{OR})=2.26$, FNP=88\%, RSM=4\%), \texttt{2155418\_G>C} $-\log_{10}(p)=7.76$, $log_{10}(\text{OR})=2.2$, FNP=86\%, RSM=4\%) and \texttt{2155546\_T>C} ($-\log_{10}(p)=5.04$, $log_{10}(\text{OR})=2.02$). In summary $katG$ is rich in variants that are highly associated and significant in INH-FNs, earning further investigation.
 
-To conclude the first-line drugs, pyrazinamide did not produce any ablated variants that passed the sensitivity-loss threshold. However, pyrazinamide produced a large, densely populated plot with many significant variants with positive associations (Figure~\ref{fig:1st}). This can be observed in the filtered variants, where in the pyrazinamide FN samples, the novel variants were in the \ppe family. Variants in $PPE$54, 55 and 60, and $PE-PGRS$4 and 9 can be observed (Table). 
+The other resistance-associated gene, $inhA$ alse failed to produce variants that surpassed ablation threshold, however they exhibited complete separation. \texttt{1674782\_T>C} possessed high significance ($-\log_{10}(p)=5.73$) and low absence in INH-R samples (RSM=4\%). Although the variant did not satisfactorily alter sensitivity, given it's location, further analysis is warranted. 
+
+None of the PE/PPE variants in INH-FN samples passed ablation thresholds. The $PPE54$ variants (\texttt{3733476\_A>AG} ($-\log_{10}(p)=5.5$, $log_{10}(\text{OR})=1.18$, FNP=37\%, RSM=4\%) and \texttt{3733405\_G>A} ($-\log_{10}(p)=9.29$, $log_{10}(\text{OR})=1.84$, FNP=73\%, RSM=4\%)), both showed formidable significance but marginal effect sizes. The PPE60 deletion, \texttt{3894503\_GGCC>G}, displayed high significance and effect size ($-\log_{10}(p)=10.52$, $log_{10}(\text{OR})=2.32$, FNP=89\%, RSM=4\%). Notably, both $PPE60$ and $PPE54$ recur in the RIF filtered set with near-identical FNP rates, suggesting their presence is more likely associated with FNs overall, rather than a specific drug, a property that should inform further investigation.
+
+\subsubsection{Ethambutol (EMB)}
+
+Out of all first-line drugs, Ethambutol False-Negatives (EMB-FNs) produced the widest array of relevant genes that harbored variants (Figure~\ref{fig:1st}). Out of 4073 significant variants, 2946 were associated with resistance ($log_{10}(\text{OR})>0$), with 1778 passing filtering. 4 variants exhibited perfect separation, highlighting their exclusive presence in EMB-FNs. Variants were identified in EMB-canonical resistance genes ($embB$, $embC$, and $ubiA$), and PE/PPE genes ($PPE54$, $PPE55$, $PPE60$, $PE\_PGRS4$, $PE\_PGRS6$, and $PE\_PGRS19$).
+
+$embB$ produced one variant, that did not pass the ablation sensitivity threshold. \texttt{4247847\_A>G} was highly significant ($-\log_{10}(p)=14.29$) and associated with resistance ($log_{10}(\text{OR})=2.65$). It was overwhelming present in EMB-FNs (FNP=90\%) and absent in only 2\% of EMB-R cases. The next EMB canonical-resistance gene, $embC$ produced one variant, \texttt{4241022\_C>T}. The variant showed complete separation and high significance ($-\log_{10}(p)=15.28$), with only 2\% EMB-R samples missing the variant. $ubiA$, the last canonical-resistance gene for EMB, also produced one variant. Similar to the $embC$ variant, \texttt{4269271\_A>G} was only observed in EMB-FNs ($log_{10}(\text{OR})=$inf), was highly significant ($-\log_{10}(p)=8.48$) with absence in 2\% in EMB-R samples. 
+
+None of the PE/PPE variants produced threshold-passing sensitivity drops. However, \texttt{1188873\_C>G} in $PE\_PGRS19$ and \texttt{ 673482\_C>T} in $PE\_PGRS7$ exhibited complete separation ($log_{10}(\text{OR})=$inf, $-\log_{10}(p)=5.09$, $-\log_{10}(p)=5.09$, respectively). $PE\_PGRS7$ produced another variant \texttt{672683\_G>A} that was highly significant and showed a large effect size ($-\log_{10}(p)=6.09$, $log_{10}(\text{OR})=2.29$). $PPE55$ produced the most variants in the PE/PPE gene family for EMB-FNs. \texttt{3745906\_A>G} was the most significant ($-\log_{10}(p)=14.64$, $log_{10}(\text{OR})=1.96$), appearing 65\% of EMB-FNs and 2\% of EMB-Rs. \texttt{3747326\_C>T} and \texttt{3744603\_T>G} exhibited identical metrics ($-\log_{10}(p)=7.46$, $log_{10}(\text{OR})=1.5$, FNP=39\%, RSM=2\%). Lastly, \texttt{3752124\_G>A} displayed high significance, moderate effect size, and low EMB-FN prevalence and EMB-R absence ($-\log_{10}(p)=6.55$, $log_{10}(\text{OR})=1.51$, FNP=40\%, RSM=2\%). $PPE60$ produced two variants, with the \texttt{3894503\_GGCC>G} deletion being the identical $PPE60$ variant seen in INH-R samples ($-\log_{10}(p)=12.63$, $log_{10}(\text{OR})=2.6$, FNP=89\%, RSM=2\%) The other, \texttt{3894484\_C>T} SNV, was highly significant and associated with resistance, but had lower EMB-FN prevalence ($-\log_{10}(p)=6.09$, $log_{10}(\text{OR})=2.29$, FNP=80\%, RSM=2\%). $PPE54$ produced one variant, \texttt{3733405\_G>A}, that was highly significant and linked with resistance ($-\log_{10}(p)=12.96$, $log_{10}(\text{OR})=2.17$), with it appearing 75\% of EMB-FNs and missing in 2\% of EMB-R samples. This variant also appeared in $PPE54$ for RIF-FN and INH-FN samples. $PE\_PGRS6$ produced one substitution, \texttt{624157\_T>G}, that showed strong association with resistance ($-\log_{10}(p)=10.98$, $log_{10}(\text{OR})=2.54$), and was present in 88\% of EMB-FNs and missing 2\% of EMB-R samples. Lastly, $PE\_PGRS4$ harbored one variant, \texttt{336616\_C>T}, which showed high significance ($-\log_{10}(p)=6.35$) but moderate association with resistance ($log_{10}(\text{OR})=2.17$). The variant was present in only 38\% of EMB-FNs and missing in 2\% of EMB-R samples. 
+
+\subsubsection{Pyrazinamide (PZA)}
+Pyrazinamide False-Negatives (PZA-FNs) was the only first-line drug to produce no variants in their canonical-resistance genes, or variants that passed the ablation sensitivity threshold. The variants of interest from PZA-FNs were exclusively in the PE/PPE gene family. $PPE54$ produced two variants:\texttt{3734621\_C>T} ($-\log_{10}(p)=5.38$, $log_{10}(\text{OR})=1.57$, FNP=56\%, RSM=3\%) and \texttt{729592\_G>A}, with \texttt{729592\_G>A} showing complete separation ($-\log_{10}(p)=5.95$, $log_{10}(\text{OR})=$inf, FNP=100\%, RSM=3\%). $PPE55$ also produced two variants, \texttt{3752419\_C>G} ($-\log_{10}(p)=5.72$, $log_{10}(\text{OR})=1.7$, FNP=62\%, RSM=3\%) and \texttt{3752065\_A>C}, with the latter showing complete separation ($-\log_{10}(p)=5.95$, $log_{10}(\text{OR})=$inf, FNP=100\%, RSM=3\%). $PPE60$ produced one variant, \texttt{3894914\_C>G}, exhibiting complete separation ($-\log_{10}(p)=5.95$, $log_{10}(\text{OR})=$inf, FNP=100\%, RSM=3\%). $PE\_PGRS4$ produced two significant variants, a deletion \texttt{336635\_CCCGCCGTTG>C} ($-\log_{10}(p)=5.09$, $log_{10}(\text{OR})=1.47$, FNP=50\%, RSM=3\%) and substitution \texttt{338688\_C>T} ($-\log_{10}(p)=6.13$, $log_{10}(\text{OR})=1.87$, FNP=71\%, RSM=3\%). Lastly, $PE\_PGRS9$ produced one substitution \texttt{836018\_G>A} ($-\log_{10}(p)=5.26$, $log_{10}(\text{OR})=2.08$, FNP=80\%, RSM=3\%). 
+
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{./figures/plots/rifampicin_volcano.pdf}
+    \includegraphics[width=0.49\textwidth]{./figures/plots/rifampicin_volcano.pdf}
     \hfill
-    \includegraphics[width=0.45\textwidth]{./figures/plots/isoniazid_volcano.pdf}
+    \includegraphics[width=0.49\textwidth]{./figures/plots/isoniazid_volcano.pdf}
+    \vspace{0.3cm}
+    \includegraphics[width=0.49\textwidth]{./figures/plots/ethambutol_volcano.pdf}
     \hfill
-    \includegraphics[width=0.45\textwidth]{./figures/plots/ethambutol_volcano.pdf}
-    \hfill
-    \includegraphics[width=0.45\textwidth]{./figures/plots/pyrazinamide_volcano.pdf}
-    \hfill
-  \label{fig:1st}
+    \includegraphics[width=0.49\textwidth]{./figures/plots/pyrazinamide_volcano.pdf}
+  \caption{Volcano plots of significance against odds ratios for first-line drug resistance predictions. The log-transformed $p$-values ($-\log_{10}(p)$) are plotted against log-transformed odds ratios ($log_{10}(\text{OR})$). Red plots indicate significant variants associated with resistance ($-\log_{10}(p)>5$, $log_{10}(\text{OR})>0$), while blue plots are significant variants not associated with resistance ($log_{10}(\text{OR})<0$). Grey points indicate non-significant variants. Green markers indicate variants exhibiting complete separation ($log_{10}(\text{OR})=$inf). Variants in canonical resistance genes, PE/PPE genes or other significant genes are labelled.} 
+    \label{fig:1st}
 \end{figure}
+
+\input{chapters/Results/files/table_variants.tex}
 
 \subsection{Second-line Drugs}
 
-\subsubsection{Group A}
+\subsubsection{Group A - Flouroquinolones}
+
+Of Group-A drugs, the Flouroquinolones (FQs) (Levofloxacin (LFX) and Moxifloxacin (MFX)) produced the most populated volcano plots (Figure~\ref{fig:2nd-a}). LFX-False-Negatives (LFX-FNs) produced 233 significant resistance-associated variants with 12 passing filtering. Whereas MFX-False-Negatives (MFX-FNs) yielded 81 significant variants associated with resistance with 44 passing filtering. A higher proportion of MFX-FNs variants passed filtering (44/80$=$0.55) compared to LFX-FN (12/233$\approx$0.05). Both LFX and MFX produced variants in PE/PPE genes ($PE\_PGRS33$ for LFX and $PPE54$ for MFX).
+
+The $PE\_PGRS33$ variant in LFX-FN was a deletion, \texttt{2062066\_TCCGCCGGCGCCGCCGGCC>T} showing high significance ($-\log_{10}(p)=5.54$) and association with resistance ($log_{10}(\text{OR})=1.14$). The variant was present in 20\% of LFX-FNs and missing in 2\% of LFX-R samples. In MFX-FNs, the $PPE54$ \texttt{3733185\_G>C} variant showed complete separation ($log_{10}(\text{OR})=$inf), high significance ($-\log_{10}(p)=5.69$) and absence in 1\% of MFX-R samples. This variant, due to its exclusive presence in MFX-FNs, warrants further discussion.
+
+\subsubsection{Group A - Novel Oral Additives}
+
+Bedaquiline (BDQ) produced a highly sparse volcano plot compared to the flouroquinolones and Linezolid (LZD) (Figure~\ref{fig:2nd-a}). With a total of 4 statistically significant variants identified, all of the variants were resistance-associated, with two passing the filtering protocols. No variants were identified in genes associated with canonical resistance mechanisms or PE/PPE genes. 
+
+In contrast, Linezolid (LZD) produced a more populated plot (Figure~\ref{fig:2nd-a}) compared to BDQ but lagged behind flouroquinolones by volume. Of 163 statistically significant variants, 162 were resistance-associated, highlighting that overwhelming majority of uncatalogued variants were resistance-associated. All 164 variants passed filtering protocols. However, no variants were identified in loci associated with resistance mechanisms or PE/PPE genes. 
 
 \begin{figure}[H]
     \centering
@@ -108,38 +142,98 @@ To conclude the first-line drugs, pyrazinamide did not produce any ablated varia
     \hfill
     \includegraphics[width=0.45\textwidth]{./figures/plots/linezolid_volcano.pdf}
     \hfill
+    \label{fig:2nd-a}
+    
+\caption{Volcano plots of significance against odds ratios for Second-Line, Group-A drug resistance predictions. The log-transformed $p$-values ($-\log_{10}(p)$) are plotted against log-transformed odds ratios ($log_{10}(\text{OR})$). Red plots indicate significant variants associated with resistance ($-\log_{10}(p)>5$, $log_{10}(\text{OR})>0$), while blue plots are significant variants not associated with resistance ($log_{10}(\text{OR})<0$). Grey points indicate non-significant variants. Green markers indicate variants exhibiting complete separation ($log_{10}(\text{OR})=$inf). Variants in canonical resistance genes, PE/PPE genes or other significant genes are labelled.}
 \end{figure}
+\input{chapters/Results/files/table_second-line-fq1.tex}
 
 \subsubsection{Group B}
 
-Clofazimine unknown mutation is in Rv3254, a conserved hypothetical protein \cite{minato2019genomewide}.
+Out of the group B drugs, Clofazimine (CFZ) was the only drug to produce statistically significant resistance-associated variants that passed sensitivity thresholds during ablation. Whereas the alternative group B drug, Cycloserine (CS) did not produce any variants (Appendix~\ref{fig:app_vol}). Compared to the group A drugs, the CFZ-False-Negative (CFZ-FN) volcano plot (Figure~\ref{fig:cfz}) was highly populated, with 835 significant variants associated with resistance, 578 of which passed filtering protocols. With variants present in canonical resistance genes ($ethA$, $Rv1979c$), PE/PPE genes ($PPE54$, $PE\_PGRS9$) and a sensitivity-reducing variant in an unrelated locus ($Rv3254$).
+
+Firstly, the $ethA$ variant (\textttt{4326333\_C>G}) produced a large loss in sensitivity with $\Delta$sensitivity = -11.08\%, when ablated. $ethA$ is not involved in the CFZ canonical-resistance mechanisms. This variant had high significance ($-log_{10}(p) = 17.59$) with a relatively modest association with CFZ resistance ($log_{10}(OR) = 1.43$). Furthermore, these variants is only present in 22\% of CFZ-False-Negative (CFZ-FN) samples, and absent in 1\% of CFZ-Resistant (CFZ-R) cases.
+
+The second ablation-filtered variant (\texttt{3634487\_G>A}) in $Rv3254$ produced a -3.67\% difference in sensitivity post-ablation. While present in over half (FNP=57\%) of CFZ-FN samples and absent in 1\% of CFZ-R cases. Furthermore, this variant was highly significant ($-log_{10}(p) = 6.16 $) and associated with resistance ($log_{10}(OR) = 2.05$). 
+
+$Rv1979c$ (\texttt{2221939\_C>T}) is the only variant in a resistance-associated gene locus. It did not pass the sensitivity threshold when ablated and although it has significance, its association with resistance disproportionately small ($-log_{10}(p) = 17.59$ and $log_{10}(OR) = 1.43$). This variant was only present in 22\% of CFZ-FNs and absent in 1\% of CFZ-R cases. Overall, incoming data can characterise this variant further.  
+
+Two variants were identified in the PE/PPE gene family, both failing to cross the sensitivity threshold. \texttt{3734189\_A>T} in $PPE54$ was highly significant ($-log_{10}(p) = 14.63$), moderately associated with resistance ($log_{10}(OR) = 1.19$), only carried by 14\% of CFZ-FNs and missing in 1\% of CFZ-R samples. $PE\_PGRS9$ had a large deletion (\texttt{836694\_ACCGGCGGGTTCGGCGATACCGACGGGGGAGCCGGCGGTG>A}) that was present in 20\% of CFZ-FNs and absent in 1\% of CFZ-R cases. The sample was significant and moderately associated with resistance ($-log_{10}(p) = 7.7$, $log_{10}(OR) = 1.34$).
+
+Overall CFZ displays a highly populated volcano plot, and presents variants in a wide variety of gene loci with two variants producing sensitivity drops in the ablation study. The sensitivity-contributing variants in $ethA$ and $Rv3254$ demands further discussion to elucidate its presence as a resistance-associated variant. Although the $Rv1979c$ variant is located in a canonical resistance-associated gene, the lower prevalence induces difficulty when promoting it to a higher priority. The \textttt{4326333\_C>G} variant in $ethA$ is suspected to be a confounder, given its exceptional metrics and lack of causal relationship with CFZ resistance. Lastly, the PE/PPE variants 
+rank lower in priority for validation as they did not induce any sensitivity changes, which i reinforced by their low prevalence.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{./figures/plots/clofazimine_volcano.pdf}
+    \includegraphics[width=\textwidth]{./figures/plots/clofazimine_volcano.pdf}
     \hfill
-    \includegraphics[width=0.45\textwidth]{./figures/plots/cycloserine_volcano.pdf}
-    \hfill
+    \caption{Volcano plots of significance against odds ratios for Second-Line Group-B drug resistance predictions. The log-transformed $p$-values ($-\log_{10}(p)$) are plotted against log-transformed odds ratios ($log_{10}(\text{OR})$). Red plots indicate significant variants associated with resistance ($-\log_{10}(p)>5$, $log_{10}(\text{OR})>0$), while blue plots are significant variants not associated with resistance ($log_{10}(\text{OR})<0$). Grey points indicate non-significant variants. Green markers indicate variants exhibiting complete separation ($log_{10}(\text{OR})=$inf). Variants in canonical resistance genes, PE/PPE genes or other significant genes are labelled.}
+    \label{fig:cfz}
 \end{figure}
+\input{chapters/Results/files/table_second-line-cfz.tex}
 
 \subsubsection{Group C}
 
-The gene-not-found for ethionamide is the same for isoniazid, 14bp upstream of $fabG1$, which makes sense biologically, since there's cross-resistance \cite{valafar2021systematic}. 
+The group C drugs provide a much more fruitful set of candidate variants, with Ethionamide (ETH) being the most dominant (Figure~\ref{fig:C}). Although Amikacin (AMK) and Delamanid (DLM) did produce filtered variants. 
+
+\subsubsection{Ethionamide (ETH)}
+
+Ethionamide (ETH) had a the most populated volcano plot of all second line drugs (Figure~\ref{fig:C}). With 2769 significant variants, of which 2518 were resistance-associated, and 706 variants passing filtering protocols. Variants were present in resistance-associated loci ($inhA$, $pbpB$) and PE/PPE family ($PPE51$, $PPE55$, $PE\_PGRS19$, and $PE\_PGRS33$). 
+
+\texttt{2426048\_G>C} in $pbpB$ was the only variant in ETH-FNs to pass the sensitivity threshold. This variant induced a -0.52\% difference in sensitivity post-ablation. This was significant and associated with resistance ($-\log_{10}(p)=6.82$, $log_{10}(\text{OR})=2.03$). The variant was common amongst EMB-FNs (FNP=86\%) and missing in 5\% ETH-R cases.
+
+$inhA$ yielded one variants with none passing the sensitivity threshold. \texttt{1674262\_A>G}, was highly significant ($-\log_{10}(p)=10.36$) and associated with resistance ($log_{10}(\text{OR})=1.78$), present in most ETH-FN samples and absent in 5\% of ETH-R samples. 
+
+No variants in the PE/PPE gene family yielded sensitivity changes post-ablation. However, multiple variants in genes of interest were identified. $PPE55$ produced 3 significant variants associated with resistance, with \texttt{3748412\_G>A} exhibiting complete separation ($log_{10}(\text{OR})=$inf and $-\log_{10}(p)=5.09$), whilst missing in 5\% of ETH-resistant cases. The other variants, \texttt{3748936\_G>A} and \texttt{3752124\_G>A}, had considerably high significance ($-\log_{10}(p)=10.36$ and $-\log_{10}(p)=12.18$, respectively), whilst displaying relatively moderate association with resistance ($log_{10}(\text{OR})=1.78$ and $log_{10}(\text{OR})=2$, respectively). Both variants were missing in 5\% of ETH-resistant cases and had similar prevalence in ETH false negatives (FNP=77\% and FNP=85\%, respectively). \texttt{3502814\_G>A} in $PPE51$ was another variant that exhibited complete separation ($log_{10}(\text{OR})=$inf), notably high significance ($-\log_{10}(p)=5.09$) and missing in only 5\% of ETH-resistant cases. Variants in the PGRS subfamily were also present with \texttt{2061315\_C>A} in $PE\_PGRS33$ being highly significant ($-\log_{10}(p)=10.36$) and associated with resistance ($log_{10}(\text{OR})=1.78$). Additionally, the variant was present in 77\% of ETH-FNs, with 5\% absence in ETH-R. \texttt{1188514\_A>G} in $PE\_PGRS19$ was also highly significant ($-\log_{10}(p)=6.82$) and had a stronger association with resistance compared to the $PE\_PGRS33$ variant ($log_{10}(\text{OR})=2.03$). With same fraction of ETH-resistant cases missing the variant (RSM=5\%), the $PE\_PGRS19$ variant was present in a larger fraction of ETH false negative cases (FNP=86\%). 
+
+
+\subsubsection{Amikacin (AMK)}
+Amikacin (AMK) produced a relatively sparse volcano plot (Figure~\ref{fig:C}), however there were large numbers of resistance-associated variants. With 214 variants associated with resistance, most variants (n=190) had passed filtering protocols. However, no variants were present in loci of interest.
+
+\subsubsection{Delamanid (DLM)}
+Delamanid (DLM) produced a similarly sparse volcano plot (Figure~\ref{fig:C}), however the number of significant variants (n=320) was substantive. Disproportionately more significant variants were associated with resistance (n=320) than not (n=11), and almost all resistance-associated variants passed filtering protocols (n=318). Of the filtered variants, only 1 was observed in a locus of interest ($PPE54$). The \texttt{3733795\_C>T} variant in $PPE54$ was statistically significant ($-log_{10}(p)=5.9$) and associated with resistance ($log_{10}(OR)=1.19$). However, the variant was only present in small fraction of DLM false negatives (FNP=14\%) and was missing in 1\% of all DLM resistant samples. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{./figures/plots/amikacin_volcano.pdf}
+    \includegraphics[width=0.49\textwidth]{./figures/plots/amikacin_volcano.pdf}
     \hfill
-    \includegraphics[width=0.45\textwidth]{./figures/plots/delamanid_volcano.pdf}
+    \includegraphics[width=0.49\textwidth]{./figures/plots/delamanid_volcano.pdf}
     \hfill
-    \includegraphics[width=0.45\textwidth]{./figures/plots/ethionamide_volcano.pdf}
+    \includegraphics[width=\textwidth]{./figures/plots/ethionamide_volcano.pdf}
     \hfill
-    \includegraphics[width=0.45\textwidth]{./figures/plots/para-aminosalicylic_acid_volcano.pdf}
-    \hfill
+    \caption{Volcano plots of significance against odds ratios for Second-Line, Group-C drug resistance predictions. The log-transformed $p$-values ($-\log_{10}(p)$) are plotted against log-transformed odds ratios ($log_{10}(\text{OR})$). Red plots indicate significant variants associated with resistance ($-\log_{10}(p)>5$, $log_{10}(\text{OR})>0$), while blue plots are significant variants not associated with resistance ($log_{10}(\text{OR})<0$). Grey points indicate non-significant variants. Green markers indicate variants exhibiting complete separation ($log_{10}(\text{OR})=$inf). Variants in canonical resistance genes, PE/PPE genes or other significant genes are labelled.}
+    \label{fig:C}
 \end{figure}
+\input{chapters/Results/files/table_second-line-eth.tex}
 
 \subsection{Other drugs}
+Other drugs that serve as accessories to standard TB treatment still produced large amounts of variants that were associated with resistance. The non-second-line flouroquinolones, Ciprofloxacin (CFX) and Ofloxacin (OFLX) produced highly populated volcano plots (Figure~\ref{fig:extra}). Whereas the aminoglycosides, Capreomycin (CAP) and Kanamycin, produced sparser plots. However, variants were still identified in resistance-associated and PE/PPE loci.
 
+\subsubsection{Other FQs - CIP and OFLX}
+
+Ofloxacin False-Negatives (OFLX-FNs) produced the largest number of variants of the accessory drugs with 3012 significant resistance-associated variants and 1618 significant variants not associated with resistance (Figure~\ref{fig:extra}). Of the 3026, 1358 passed filtering protocols and produced variants in resistance-associated loci (5 variants in $gyrA$, 1 in $gyrB$) and PE/PPE (1 variant in $PPE54$, $PPE55$, $PPE68$ and 2 variants in $PE\_PGRS7$). No variant detected in OFLX had passed the sensitivity threshold in the ablation study. 
+
+Firstly, $gyrA$ yielded five variants, two (\texttt{7581\_GACAG>TACAC}, \texttt{8955\_G>C}) of which exhibited complete separation (both $log_{10}(\text{OR})=$inf) and were highly significant ($-\log_{10}(p)=16.98$, $-\log_{10}(p)=9.41$, respectively). Both variants were absent in 11\% of all OFLX-resistant samples. \texttt{7581\_GACAG>TACAC} and \texttt{7581\_GACAG>CACAC} both were missing in 11\% of OFLX-resistant cases, with the former variant being triple the $-\log_{10}(p)$ significance of the latter ($-\log_{10}(p)=5.73$, $log_{10}(\text{OR})=1.74$). The third \texttt{7581} variant, \texttt{7581\_GACAG>AACAC}, was the most significant ($-\log_{10}(p)=29.51$) with strong resistance-association ($log_{10}(\text{OR})=2.14$). This variant was overwhelmingly present in OFLX-FNs (FNP=94\%) and absent in 11\% of OFLX-Resistant (OFLX-R) samples. \texttt{8955\_G>C} showed complete separation ($log_{10}(\text{OR})=$inf) and considerably high confidence ($-\log_{10}(p)=9.41$), with 11\% OFLX-resistant cases missing the variant. Lastly, \texttt{8639\_G>A} had relatively moderate significance ($-\log_{10}(p)=5.12$) and association with resistance ($log_{10}(\text{OR})=1.43$) compared to the other filtered $gyrA$ variants, but similar OFLX false negative prevalence (FNP=78\%) and absence in OFLX-R samples (RSM=11\%). 
+
+$gyrB$, another FQ-resistance relevant gene, yielded only one variant, \texttt{6608\_G>C}. The variant failed to cross the ablation sensitivity threshold, and had high significance ($-\log_{10}(p)=5.8$) and association with resistance ($log_{10}(\text{OR})=1.24$. The variant was present in majority of OFLX false negatives and missing in 11\% of OFLX-resistant samples. 
+
+Two variants in PE/PPE loci displayed complete separation: \texttt{4351991\_C>A} in $PPE68$ and \texttt{672738\_G>CCGA} in $PE\_PGRS7$ (both $log_{10}(\text{OR})=$inf), with both variants having high significance ($-\log_{10}(p)=9.41$ and $-\log_{10}(p)=5.64$, respectively) and rate of absence in OFLX-resistant samples (RSM=11\% for both). $PE\_PGRS7$ had another variant, \texttt{675069\_C>A}, with similar significance ($-\log_{10}(p)=5.12$), resistance-association ($log_{10}(\text{OR})=1.43$), and identical OFLX-resistant absence rates (RSM=11\%). \texttt{3734189\_A>T} in $PPE54$ had the highest significance of all the PE/PPE variants ($-\log_{10}(p)=39.73$), with moderate association with resistance ($log_{10}(\text{OR})=1.09$). The variant was present in the majority of OFLX false negatives (FNP=59\%), and 11\% of OFLX-resistant samples lacked the variant. Lastly, $PPE55$ yielded the \texttt{3747888\_T>C} variant with high significance ($-\log_{10}(p)=5.8$) and association with resistance ($log_{10}(\text{OR})=1.24$. With 11\% of OFLX resistant samples lacking the variant and 69\% of OFLX false negatives possesing it.  
+
+Ciprofloxacin (CIP) produced 211 significant variants with only 1 variant not associated with resistance. Out of 217, 156 variant passed filtering protocols and were present in four PE/PPE genes ($PPE50$, $PPE54$, $PE\_PGRS4$ and $PE\_PGRS19$). 
+
+CIP-FN only had one variant to show complete separation, \texttt{3501668\_G>C} in $PPE50$ ($log_{10}(\text{OR})=$inf), with 13\% of CIP-R samples missing it. The variant also showed notably high significance ($-\log_{10}(p)=14.13$). \texttt{3735033\_G>A} in $PPE54$ had high significance ($log_{10}(p)=7.29$) and resistance association ($log_{10}(\text{OR})=1.39$), with 80\% of CIP-FN samples possessing, and 14\% of CIP-R variants lacking the variant. $PE\_PGRS4$ yielded four variants of high significance with \text{338682\_TCCC>GGCG} having the highest significance ($-\log_{10}(p)=16.22$). The variant had moderate association with resistance ($log_{10}(\text{OR})=1.38$), present in the majority of CIP-FN samples (FNP=74\%) and missing in 10\% of CIP-R cases. The other three variants (listed in descending order) also had notably high significance and moderate association with resistance: \texttt{338682\_TCCC>GGCG} ($-\log_{10}(p)=13.16$, $log_{10}(\text{OR})=1.17$), \texttt{338669\_T>C} ($-\log_{10}(p)=11.33$, $log_{10}(\text{OR})=1.06$) and \texttt{338648\_T>G} ($-\log_{10}(p)=10.49$, $log_{10}(\text{OR})=1.28$). Lastly, $PE\_PGRS19$ produced one deletion, \texttt{1189137\_C>CGCCGCCGGCCCCGCCGTT} with considerably high significance ($-\log_{10}(p)=11.26$), and moderate resistance association ($log_{10}(\text{OR})=1.31$). The variant was also present in the majority of CIP-resistant samples (FNP=74\%) and missing in 12\% of CIP-resistant samples.
+
+\subsubsection{Other aminoglycosides - Kanamycin, Capreomycin and Streptomycin}
+
+Both Kanamycin (KAN) and Capreomycin (CAP) produced populated volcano plots (Figure~\ref{fig:C}), with only KAN-False Negatives (KAN-FN) samples showing a PE/PPE ($PPE68$) variant.
+
+Firstly, KAN-FN samples produced 561 significant variants with the overwhelming majority being associated with resistant (n=559). Of those 532, about half (n=224) had passed filtering protocols yielding one variant in $PPE68$. \texttt{4351991\_C>A} in $PPE68$ had high significance ($-\log_{10}(p)=8.01$) and association with resistance ($log_{10}(\text{OR})=1.89$), with 60\% of KAN-FN samples carrying the variant and 2\% of KAN-resistant samples lacking it. 
+
+Capreomycin (CAP) produced 111 significant variants with 101 associated with resistance (Figure~\ref{fig:C}). Only 2 variants, however, passed filtering protocols.
+
+Streptomycin-False Negatives (STP-FNs) produced 3381 significant variants, 2402 associated with resistance ($\sim$2/3) and 1506 of those passing filtering. Variants were identified in PE/PPE genes ($PPE51$, $PPE55$, $PPE42$, $PE\_PGRS4$ and $PE\_PGRS33$).
+
+No variants in PE/PPE passed the sensitivity threshold during the ablation study. \texttt{2935915\_C>A} in $PPE42$ was the most signigicant out all STP-FN PE/PPE variants ($-\log_{10}(p)=18.08$) with moderate resistance-association ($log_{10}(\text{OR})=1.25$). Majority of STP-FNs possessed the variant (FNP=60\%) and 8\% of STP-R samples lacked it. The remaining variants had similar significance, odd ratios, prevalence in STP-FNs and absence in STP-Rs: \texttt{337482\_C>T} in $PE\_PGRS4$ ($-\log_{10}(p)=14.54$, $log_{10}(\text{OR})=1.28$, FNP=62\%, RSM=8\%), \texttt{3502457\_G>A} in $PPE51$ ($-\log_{10}(p)=14.37$, $log_{10}(\text{OR})=1.21$, FNP=58\%, RSM=8\%), \texttt{2061424\_G>A} in $PE\_PGRS33$ ($-\log_{10}(p)=12.6$, $log_{10}(\text{OR})=1.28$, FNP=62\%, RSM=8\%) and \texttt{3745863\_G>A} in $PPE55$ ($-\log_{10}(p)=11.46$, $log_{10}(\text{OR})=1.4$, FNP=68\%, RSM=8\%). Overall, these variants do show significant association with resistance, and are abundant in STP-FNs and rare in STP-Rs. Further investigation should be conducted to elucidate their resistance mechanisms.
 
 \begin{figure}[H]
     \centering
@@ -151,6 +245,9 @@ The gene-not-found for ethionamide is the same for isoniazid, 14bp upstream of $
     \hfill
     \includegraphics[width=0.45\textwidth]{./figures/plots/ofloxacin_volcano.pdf}
     \hfill
+    \includegraphics[width=0.45\textwidth]{./figures/plots/streptomycin_volcano.pdf}
+    \label{fig:extra}
+    \caption{Volcano plots of significance against odds ratios for other drug resistance predictions. Volcano plots of Capreomycin, Ciprofloxacin, Kanamycin, Ofloxacin and Streptomycin are included.The log-transformed $p$-values ($-\log_{10}(p)$) are plotted against log-transformed odds ratios ($log_{10}(\text{OR})$). Red plots indicate significant variants associated with resistance ($-\log_{10}(p)>5$, $log_{10}(\text{OR})>0$), while blue plots are significant variants not associated with resistance ($log_{10}(\text{OR})<0$). Grey points indicate non-significant variants. Green markers indicate variants exhibiting complete separation ($log_{10}(\text{OR})=$inf). Variants in canonical resistance genes, PE/PPE genes or other significant genes are labelled.}
 \end{figure}
+\input{chapters/Results/files/table_second-line-cip.tex}
 
-\input{Chapters/Results/tb_tab.tex}

@@ -1,0 +1,78 @@
+% !TeX root = ../main.tex
+% ============================================================
+% REQUIRED PACKAGES:
+%   \usepackage{booktabs}
+%   \usepackage{longtable}
+%   \usepackage{array}
+%   \usepackage{pdflscape}
+% ============================================================
+\begin{landscape}
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.25}
+\newlength{\nncolW}
+\setlength{\nncolW}{\dimexpr\linewidth - 60pt\relax}
+\begin{longtable}{%
+  >{\raggedright\arraybackslash}p{0.09\nncolW}%  Drug
+  >{\raggedright\arraybackslash}p{0.21\nncolW}%  Sensitivity
+  >{\raggedright\arraybackslash}p{0.21\nncolW}%  Specificity
+  >{\raggedright\arraybackslash}p{0.21\nncolW}%  F1
+  >{\centering\arraybackslash}p{0.15\nncolW}%   Threshold
+  >{\centering\arraybackslash}p{0.06\nncolW}%   n
+}
+\caption{Neural network classifier performance per drug. For sensitivity,
+specificity, and F1, each cell is formatted as
+\textbf{TB-Profiler} $|$ WHO NN, WHO+ER NN, WHO+ER+Filt NN,
+where TB-Profiler is the na\"{i}ve rule-based baseline and the three
+NN variants use WHO SNPs, WHO~+~expert rules, and WHO~+~expert
+rules~+~filtered variant sets respectively. Threshold lists the
+three NN decision thresholds; $n$ is the dataset size (shared across models).}
+\label{tab:nn-metrics}\\
+\toprule
+\textbf{Drug}
+  & \textbf{Sensitivity}
+  & \textbf{Specificity}
+  & \textbf{F1}
+  & \textbf{Threshold}
+  & $\boldsymbol{n}$ \\
+\midrule
+\multicolumn{6}{l}{%
+  \footnotesize\itshape
+  \textbf{bold} = TB-Profiler $|$ WHO NN,\ WHO+ER NN,\ WHO+ER+Filt NN}\\[3pt]
+\midrule
+\endfirsthead
+\caption*{Table~\ref{tab:nn-metrics} \textit{(continued)}}\\
+\toprule
+\textbf{Drug}
+  & \textbf{Sensitivity}
+  & \textbf{Specificity}
+  & \textbf{F1}
+  & \textbf{Threshold}
+  & $\boldsymbol{n}$ \\
+\midrule
+\endhead
+\midrule\multicolumn{6}{r}{\small\textit{continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+AMK & \textbf{0.844} $|$ 0.878, 0.881, 0.881 & \textbf{0.989} $|$ 0.796, 0.801, 0.804 & \textbf{0.862} $|$ 0.45, 0.457, 0.461 & 0.09, 0.09, 0.08 & 4112 \\
+BDQ & \textbf{0.531} $|$ 0.556, 0.722, 0.722 & \textbf{0.983} $|$ 0.823, 0.823, 0.831 & \textbf{0.364} $|$ 0.056, 0.072, 0.075 & 0.07, 0.05, 0.05 & 1890 \\
+CAP & \textbf{0.785} $|$ 0.847, 0.871, 0.863 & \textbf{0.977} $|$ 0.799, 0.787, 0.805 & \textbf{0.777} $|$ 0.426, 0.423, 0.44 & 0.11, 0.1, 0.1 & 2871 \\
+CFZ & \textbf{0.166} $|$ 0.37, 0.296, 0.333 & \textbf{0.987} $|$ 0.86, 0.979, 0.979 & \textbf{0.162} $|$ 0.06, 0.203, 0.225 & 0.1, 0.5, 0.5 & 2133 \\
+DLM & \textbf{0.181} $|$ 0.304, 0.478, 0.478 & \textbf{0.999} $|$ 0.902, 0.979, 0.981 & \textbf{0.294} $|$ 0.072, 0.319, 0.333 & 0.1, 0.5, 0.5 & 1690 \\
+EMB & \textbf{0.916} $|$ 0.948, 0.95, 0.947 & \textbf{0.905} $|$ 0.814, 0.816, 0.822 & \textbf{0.782} $|$ 0.692, 0.695, 0.701 & 0.05, 0.05, 0.05 & 6610 \\
+ETO & \textbf{0.807} $|$ 0.851, 0.801, 0.841 & \textbf{0.888} $|$ 0.808, 0.869, 0.878 & \textbf{0.721} $|$ 0.662, 0.698, 0.732 & 0.16, 0.5, 0.5 & 2863 \\
+INH & \textbf{0.934} $|$ 0.945, 0.949, 0.948 & \textbf{0.973} $|$ 0.927, 0.877, 0.892 & \textbf{0.943} $|$ 0.914, 0.879, 0.89 & 0.07, 0.06, 0.05 & 8090 \\
+KAN & \textbf{0.840} $|$ 0.872, 0.875, 0.863 & \textbf{0.979} $|$ 0.81, 0.804, 0.797 & \textbf{0.836} $|$ 0.499, 0.493, 0.48 & 0.08, 0.07, 0.07 & 4185 \\
+LFX & \textbf{0.913} $|$ 0.816, 0.816, 0.789 & \textbf{0.972} $|$ 0.917, 0.921, 0.956 & \textbf{0.892} $|$ 0.735, 0.742, 0.787 & 0.2, 0.2, 0.32 & 3639 \\
+LZD & \textbf{0.414} $|$ 0.6, 0.6, 0.6 & \textbf{0.997} $|$ 0.818, 0.823, 0.812 & \textbf{0.502} $|$ 0.081, 0.082, 0.078 & 0.06, 0.06, 0.06 & 2222 \\
+MFX & \textbf{0.923} $|$ 0.794, 0.868, 0.759 & \textbf{0.919} $|$ 0.907, 0.829, 0.928 & \textbf{0.753} $|$ 0.665, 0.586, 0.683 & 0.22, 0.12, 0.37 & 3414 \\
+PZA & \textbf{0.846} $|$ 0.894, 0.89, 0.886 & \textbf{0.969} $|$ 0.788, 0.796, 0.794 & \textbf{0.850} $|$ 0.625, 0.631, 0.627 & 0.08, 0.06, 0.06 & 4353 \\
+RIF & \textbf{0.959} $|$ 0.941, 0.941, 0.962 & \textbf{0.978} $|$ 0.984, 0.984, 0.869 & \textbf{0.954} $|$ 0.951, 0.951, 0.849 & 0.64, 0.63, 0.02 & 8028 \\
+STP & \textbf{0.844} $|$ 0.939, 0.926, 0.927 & \textbf{0.939} $|$ 0.772, 0.803, 0.798 & \textbf{0.862} $|$ 0.796, 0.808, 0.806 & 0.05, 0.06, 0.06 & 3141 \\
+
+\end{longtable}
+\endgroup
+\end{landscape}
+% --- END TABLE ---

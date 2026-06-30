@@ -1,0 +1,140 @@
+"""
+This script analyses drug susceptibility predictions and phenotypes for TB samples. 
+It classifies each prediction as TP, TN FP or FN. 
+Author: Md Nabil Islam
+Date: 29/12/24
+"""
+import pandas as pd
+import sys
+import json
+from pathlib import Path
+
+
+def validate_csv(data, required_columns):
+    """
+    Validates that DataFrame has required columns.
+
+    Args:
+        data (pd.DataFrame): The data to be validated.
+        required_colums (list): List columns expected in the DataFrame.
+
+    Raises:
+        ValueError: If any required columns are missing
+    """
+    missing_columns = [
+        col for col in required_columns if col not in data.columns]
+    if missing_columns:
+        raise ValueError(f"Missing columns: {missing_columns}")
+
+
+def classify_drug(df, drug_list):
+    """
+    Determines the drug susceptibility classification based on the phenotype and prediction.
+    Each run is classified into TP, FP, TN, FN
+
+    Args:
+        df (pd.DataFrame): dataframe of merged CSVs of the predictions and phenotypes
+        drug_list (list): List of all drugs tested
+
+    Returns:
+        output_df (pd.DataFrame): DataFrame containing the run, drug, classification and tool
+    """
+
+    # Collect output rows in a list
+    output_rows = []
+    class_dict = {}
+
+    for _, run in df.iterrows():
+        pred_drug = run['drug'].lower()
+        prediction = run['prediction']
+
+        if run['run'] not in list(class_dict.keys()):
+            class_dict[run['run']] = {}
+
+        # Determine drugs needed to evaluate
+        drugs_to_evaluate = [pred_drug] if pred_drug != 'all' else drug_list
+
+        for drug in drugs_to_evaluate:
+            if pd.notna(run.get(drug, None)):
+
+                if drug not in class_dict[run['run']]:
+                    class_dict[run['run']][drug] = {}
+
+                if prediction == run[drug]:
+                    classification = 'TN' if prediction == 'S' or prediction == '' else 'TP'
+                else:
+                    classification = 'FP' if prediction == 'R' else 'FN'
+
+                class_dict[run['run']][drug] = classification
+
+                # Form the row for output
+                output_rows.append({
+                    "run": run['run'],
+                    "drug": drug,
+                    "classification": classification,
+                    "tool": run['tool']
+                })
+
+    for _, run in df.drop_duplicates('run').iterrows():
+        for drug in drug_list:
+            if drug not in class_dict.get(run['run'], {}):
+                phenotype = run.get(drug, None)
+                if pd.notna(phenotype):
+                    classification = 'TN' if phenotype == 'S' else 'FN'
+                    class_dict.setdefault(run['run'], {})[
+                        drug] = classification
+                    output_rows.append({
+                        "run": run['run'],
+                        "drug": drug,
+                        "classification": classification,
+                        "tool": run['tool']
+                    })
+
+    comma = pd.DataFrame(output_rows)
+
+    print(comma)
+
+    return comma, class_dict
+
+
+if __name__ == "__main__":
+    try:
+        # SnakeMake variables
+        FNP = Path('/data/scratch/projects/punim1703/false_negative/')
+        phenotype_path = FNP / 'old_tbprof/resources/data/samples.csv'
+        predictions_path = FNP / \
+            'tbprof-rerun/results/amr_predictions/tbprofiler/tb-prof_6.6.6_summary.csv'
+        classifications_path = FNP / 'old_tbprof/resources/data/NEW_classifications.csv'
+
+        # Load input data
+        predictions = pd.read_csv(predictions_path)
+        phenotypes = pd.read_csv(phenotype_path, low_memory=False)
+
+        # Validate input files
+        columns = ["run"]
+        validate_csv(predictions, columns)
+        validate_csv(phenotypes, columns)
+
+        # Merge predictions and phenotypes
+        comparison_df = pd.merge(
+            predictions, phenotypes, on='run', how='inner')
+
+        # Initialise DrugClassifier
+        drugs = ['amikacin', 'bedaquiline', 'capreomycin', 'ciprofloxacin',
+                 'clofazimine', 'cycloserine', 'delamanid', 'ethambutol', 'ethionamide',
+                 'gatifloxacin', 'isoniazid', 'kanamycin', 'levofloxacin', 'linezolid',
+                 'moxifloxacin', 'ofloxacin', 'para-aminosalicylic_acid', 'pyrazinamide',
+                 'rifabutin', 'rifampicin', 'streptomycin', 'thioacetazone']
+
+        # Perform classification
+        classified_df, classified_json = classify_drug(comparison_df, drugs)
+
+        # Save all classifications to a CSV
+        classified_df.to_csv(classifications_path, index=False)
+
+        with open("/data/scratch/projects/punim1703/false_negative/old_tbprof/resources/data/NEW_json_classified.json", "w") as f:
+            json.dump(classified_json, f)
+
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)

@@ -19,7 +19,7 @@ To construct features representing resistance-conferring variants from the WHO-c
     \hline
     Group & Classification \\
     \arrayrulecolor{red}\hline
-    1 & Assoc R \\
+    1 & Assoc with R \\
     \arrayrulecolor{red}\hline
     2 & Assoc w R-interim \\
     \arrayrulecolor{red}\hline
@@ -32,7 +32,7 @@ To construct features representing resistance-conferring variants from the WHO-c
   \end{tabular}
   \\[1cm]
   \includegraphics[width=\textwidth]{figures/who_snps.pdf}
-  \caption{WHO SNP filtering process}
+  \caption{WHO SNP filtering process, where variants from the WHO catalogue were selected if they were associated with resistance, or associated with resistance in the interim (Group 1 and 2 respectively).}
   \label{fig:who}
 \end{figure}
 
@@ -45,8 +45,8 @@ The expert rules that could be incorporated into the pipeline were rules 6–11,
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1\textwidth]{figures/er.drawio-1.pdf}
-  \caption{Expert rules SNP filtering process}
+  \includegraphics[width=\textwidth, height=0.85\textheight, keepaspectratio]{figures/er.drawio-1.pdf}
+  \caption{Expert rules SNP filtering process. A variant or SNP accepted if they were non-synonymous, present in a canonical resistance gene, if the variant placed in different regions depending on the drug (e.g. RRDR for RIF \cite{islam2017drug}). Lastly they were added to the existing WHO-catalogue.}
   \label{fig:er}
 \end{figure}
 
@@ -74,7 +74,7 @@ To ensure the significant variants were not markers of M.tb lineage \cite{gagneu
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=1\textwidth]{figures/filt.drawio.pdf}
-  \caption{Filtering SNP from FNs and augmented existing catalogues}
+  \caption{Workflow for filtering false-negative variants and augmenting existing resistance catalogues. Raw genomes acquired from SRA and ENA \cite{sra_infra_2022, ena_infra_2024} are processed via TB-Profiler \cite{phelan2019integrating}, to generate resistance predictions. Statistical filtering of false-negatives was performed using Fisher's Exact Test alongside specific $p$-value and odd ratio (OR) thresholds. Final candidate variants were checked against lineage markers and inclusion in existing catalogues to construct per-drug augmented weight matrices}
   \label{fig:filt}
 \end{figure}
 
@@ -148,7 +148,7 @@ To produce a resistance prediction for a sample, for a particular drug, a probab
       \draw[->, thick] (p1) -- (y1);
 
   \end{tikzpicture}
-  \caption{Schematic for one neuron with weights specified for a particular drug}
+  \caption{Single-neuron schematic mapping catalogue variants to a single drug resistant profile. A binary feature vector $\mathbf{x}\in\{0,1\}^{26k\times1}$ extracted from a VCF file is passed through a single neuron with catalogue specified variants $w$. The sigmoid activation function $\sigma$, outputs a probability $\hat{p}\in [0,1]$, which is then mapped to a resistance prediction $y\in \{R,S\}$.}
   \label{fig:onescheme}
 \end{figure}
 
@@ -263,7 +263,7 @@ For all 15 anti-TB drugs from the WHO catalogue, 15 neurons corresponding to eac
       \node[plain] at (7.5, 4.6) {$\mathbf{y}$};
 
   \end{tikzpicture}
-  \caption{Neural Net schematic for 15 drugs}
+  \caption{Multi-output neural network architecture for concurrent multi-drug resistance prediction. The binary input tensor $\mathbf{x}$ serves as a shared input for 15 independent neurons corresponding to 15 different drugs. This produced an output vector of probabilities $\hat{p}$, which is then mapped onto resistance predictions in vector $\mathbf{y}$.}
   \label{fig:fullschem}
 \end{figure}
 
@@ -291,8 +291,8 @@ Following threshold assignment for each drug, an \textit{in silico} feature abla
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1.2\textwidth]{figures/train.drawio.pdf}
-  \caption{Training process}
+  \includegraphics[width=1\textwidth]{figures/train.drawio.pdf}
+  \caption{Schematic for network training process. A binary input tensor $\mathbf{x} \in \{0,1\}^{26k\times 1}$ is processed through the network producing an output vector $\mathbf{y}$. The model uses the output and backpropagation to train itself, and feature-ablation and threshold-tuning post-training to improve performance metrics.}
   \label{fig:train}
 \end{figure}
 

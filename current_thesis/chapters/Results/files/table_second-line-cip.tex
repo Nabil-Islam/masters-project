@@ -1,0 +1,70 @@
+% !TeX root = ../main.tex
+% ============================================================
+% REQUIRED PACKAGES -- add to your preamble if not present:
+%   \usepackage{booktabs}
+%   \usepackage{longtable}
+%   \usepackage{array}
+%   \usepackage{amsmath}
+%   \usepackage{multirow}
+% ============================================================
+% --- BEGIN TABLE SNIPPET ---
+\begingroup  % <- local scope; all settings below are restored after \endgroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\newlength{\colW}
+\setlength{\colW}{\dimexpr\linewidth - 24pt\relax}% subtract 3 cols * 2 * 4pt tabcolsep
+\newcommand{\tbsecrow}[1]{%
+  \midrule[0.4pt]
+  \multicolumn{3}{l}{\rule{0pt}{9pt}\textbf{\small #1}}\\[1pt]
+}
+\begin{longtable}{%
+  >{\centering\arraybackslash}p{0.060\colW}%   Drug
+  >{\raggedright\arraybackslash}p{0.120\colW}% Gene
+  >{\raggedright\arraybackslash}p{0.820\colW}% Variant (stats inline)
+}
+\caption{Ciprofloxacin, kanamycin, ofloxacin, and streptomycin variants in drug-resistance, cross-resistance, and \ppe genes. For each variant, the parenthesis lists FNP, RSM, and $\Delta$ sensitivity (\%), followed by the association statistics $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$. Variants marked $\dagger$ have an infinite odds ratio (complete separation).}
+\label{tab:cip-kan-ofx-str}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endfirsthead
+\caption*{Table~\ref{tab:cip-kan-ofx-str} \textit{(continued)}}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\small\textit{continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+% -------------------------------------------------------
+\tbsecrow{Ciprofloxacin}
+& \textit{PE\_PGRS4}	& \texttt{338682\_TCCC>GGCG} (74\%, 10\%, --) [16.22, 1.38], \texttt{338690\_ATT>GTC} (64\%, 11\%, --) [13.16, 1.17], \texttt{338669\_T>C} (59\%, 11\%, --) [11.33, 1.06], \texttt{338648\_T>G} (73\%, 13\%, --) [10.49, 1.28]\\
+& \textit{PE\_PGRS19}	& \texttt{1189137\_C>CGCCGCCGGCCCCGCCGTT} (74\%, 12\%, --) [11.26, 1.31]\\
+& \textit{PPE50}	& \texttt{3501668\_G>C}$^{\dagger}$ (100\%, 13\%, --) [14.13, $\infty$]\\
+& \textit{PPE54}	& \texttt{3735033\_G>A} (80\%, 14\%, --) [7.29, 1.39]\\
+% -------------------------------------------------------
+\tbsecrow{Kanamycin}
+& \textit{PPE68}	& \texttt{4351991\_C>A} (60\%, 2\%, --) [8.01, 1.89]\\
+% -------------------------------------------------------
+\tbsecrow{Ofloxacin}
+& \textit{gyrA}	& \texttt{8955\_G>C}$^{\dagger}$ (100\%, 11\%, --) [9.41, $\infty$], \texttt{7581\_GACAG>TACAC}$^{\dagger}$ (100\%, 11\%, --) [16.98, $\infty$], \texttt{7581\_GACAG>CACAC} (88\%, 11\%, --) [5.73, 1.74], \texttt{7581\_GACAG>AACAC} (94\%, 11\%, --) [29.51, 2.14], \texttt{8639\_G>A} (78\%, 11\%, --) [5.12, 1.43]\\
+& \textit{PE\_PGRS7}	& \texttt{672738\_G>CCGA}$^{\dagger}$ (100\%, 11\%, --) [5.64, $\infty$], \texttt{675069\_C>A} (78\%, 11\%, --) [5.12, 1.43]\\
+& \textit{gyrB}	& \texttt{6608\_G>C} (69\%, 11\%, --) [5.8, 1.24]\\
+& \textit{PPE68}	& \texttt{4351991\_C>A}$^{\dagger}$ (100\%, 11\%, --) [9.41, $\infty$]\\
+& \textit{PPE55}	& \texttt{3747888\_T>C} (69\%, 11\%, --) [5.8, 1.24]\\
+& \textit{PPE54}	& \texttt{3734189\_A>T} (59\%, 11\%, --) [39.73, 1.09]\\
+% -------------------------------------------------------
+\tbsecrow{Streptomycin}
+& \textit{PE\_PGRS4}	& \texttt{337482\_C>T} (62\%, 8\%, --) [14.54, 1.28]\\
+& \textit{PPE51}	& \texttt{3502457\_G>A} (58\%, 8\%, --) [14.37, 1.21]\\
+& \textit{PPE42}	& \texttt{2935915\_C>A} (60\%, 8\%, --) [18.08, 1.25]\\
+& \textit{PPE55}	& \texttt{3745863\_G>A} (68\%, 8\%, --) [11.46, 1.4]\\
+& \textit{PE\_PGRS33}	& \texttt{2061424\_G>A} (62\%, 8\%, --) [12.6, 1.28]\\
+
+\end{longtable}
+\endgroup
+% --- END TABLE SNIPPET ---

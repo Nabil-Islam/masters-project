@@ -1,0 +1,312 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib import rcParams
+from matplotlib.lines import Line2D
+from pathlib import Path
+import subprocess
+import json
+
+RESULTS = Path.cwd() / 'results'
+MATRICES = RESULTS / 'matrices'
+SENS = Path(
+    '/data/scratch/projects/punim1703/nn_tb/REVISION/results/essentials/diff_snps_fixed.json')
+ALL_VARS = Path(
+    '/data/scratch/projects/punim1703/nn_tb/REVISION/results/filtered_gene_name.json')
+
+with open(ALL_VARS, 'r') as f:
+    relevant_snps = json.load(f)
+
+with open(SENS, 'r') as f:
+    flagged_snps = json.load(f)
+
+drugs = subprocess.run(
+    f'ls {MATRICES}', shell=True, capture_output=True, text=True
+).stdout.split()
+
+rcParams.update({
+    "font.family":       "sans-serif",
+    "font.sans-serif":   ["Nimbus Sans", "Liberation Sans", "DejaVu Sans"],
+    "font.size":         8,
+    "axes.linewidth":    0.75,
+    "xtick.major.width": 0.75,
+    "ytick.major.width": 0.75,
+    "xtick.major.size":  3.5,
+    "ytick.major.size":  3.5,
+    "xtick.direction":   "out",
+    "ytick.direction":   "out",
+    "axes.spines.top":   False,
+    "axes.spines.right": False,
+    "pdf.fonttype":      42,
+    "svg.fonttype":      "none",
+})
+
+COLORS = {
+    "ns":   "#BBBBBB",
+    "up":   "#800020",   # maroon  (OR > 0)
+    "down": "#1A3A6B",   # deep blue (OR < 0)
+}
+
+PVAL_THRESH = 5
+
+extra = {
+    'rifampicin': ['rpoB', 'PE_PGRS56', 'PPE54', 'PPE60'],
+    'isoniazid': ['katG', 'inhA', 'PE_PGRS56', 'PPE54', 'PPE60'],
+    'ethambutol': ['embB', 'embC', 'ubiA', 'PE_PGRS4', 'PE_PGRS6', 'PE_PGRS7',
+                   'PE_PGRS59', 'PE_PGRS19', 'PPE54', 'PPE55', 'PPE60'],
+    'pyrazinamide': ['PE_PGRS4', 'PE_PGRS9', 'PPE54', 'PPE55', 'PPE60'],
+    'ciprofloxacin': ['gyrA', 'PE_PGRS4', 'PE_PGRS19', 'PPE50', 'PPE54'],
+    'levofloxacin': ['gyrA', 'PE_PGRS33'],
+    'moxifloxacin': ['gyrA', 'PPE54'],
+    'ofloxacin': ['gyrA', 'gyrB', 'PE_PGRS7', 'PPE54', 'PPE55', 'PPE68'],
+    'clofazimine': ['PE_PGRS9', 'PPE54', 'Rv1979c', 'Rv0678'],
+    'delamanid': ['PPE54'],
+    'amikacin': ['rrs'],
+    'kanamycin': ['rrs', 'PPE68'],
+    'capreomycin': ['rrs'],
+    'streptomycin': ['rpsL', 'rrs', 'PE_PGRS4', 'PE_PGRS33', 'PPE42', 'PPE51',
+                     'PPE55'],
+    'ethionamide': ['inhA', 'PE_PGRS19', 'PE_PGRS33', 'PPE51', 'PPE55']
+}
+
+
+def sig_color(row):
+    if row["neg_log10_p"] > PVAL_THRESH and row["log_or"] > 0:
+        return "up"
+    if row["neg_log10_p"] > PVAL_THRESH and row["log_or"] < 0:
+        return "down"
+    return "ns"
+
+
+(RESULTS / 'plots').mkdir(parents=True, exist_ok=True)
+
+# Master list to hold table data across all drugs
+summary_table_data = []
+
+# ── MAIN LOOP ─────────────────────────────────────────────────────────────────
+for d in drugs:
+    all_path = Path(MATRICES / f'{d}/{d}_enriched_snps.csv')
+    filtsnps = Path(MATRICES / f'{d}/filtered_{d}_snps.csv')
+    if not all_path.exists():
+        print(f"Skipping {d}: file not found")
+        continue
+
+    df_raw = pd.read_csv(all_path)
+    df_raw["neg_log10_p"] = -df_raw["log_pval"]
+    df_raw["color"] = df_raw.apply(sig_color, axis=1)
+
+    df = df_raw[np.isfinite(df_raw["log_or"])].copy()
+    df_inf = df_raw[~np.isfinite(df_raw["log_or"])].copy()
+
+    try:
+        df2 = pd.read_csv(filtsnps)
+        df = pd.concat([df, df2])
+        df = df[np.isfinite(df["log_or"])].copy()
+    except (pd.errors.EmptyDataError, pd.errors.ParserError):
+        pass
+
+    if df.empty:
+        print(f"Skipping {d}: no finite data")
+        continue
+
+    df["neg_log10_p"] = -df["log_pval"]
+    df["color"] = df.apply(sig_color, axis=1)
+
+    try:
+        fsnps = pd.read_csv(filtsnps)
+        filtered_ids = set(fsnps["snp"])
+    except (FileNotFoundError, pd.errors.EmptyDataError):
+        filtered_ids = set()
+    df["is_filtered"] = df["snp"].isin(filtered_ids)
+
+    fig, ax = plt.subplots(figsize=(240 / 25.4, 100 / 25.4), dpi=300)
+
+    for group in ["ns", "down", "up"]:
+        sub = df[df["color"] == group]
+        unfiltered = sub[~sub["is_filtered"]]
+        filtered = sub[sub["is_filtered"]]
+
+        ax.scatter(
+            unfiltered["log_or"], unfiltered["neg_log10_p"],
+            s=4 if group == "ns" else 8,
+            c=COLORS[group],
+            alpha=0.35 if group == "ns" else 0.75,
+            linewidths=0,
+            rasterized=True,
+            zorder=2 if group == "ns" else 3,
+        )
+        ax.scatter(
+            filtered["log_or"], filtered["neg_log10_p"],
+            s=4 if group == "ns" else 8,
+            c=COLORS[group],
+            alpha=0.35 if group == "ns" else 0.75,
+            linewidths=0.5,
+            edgecolors="black",
+            rasterized=True,
+            zorder=4,
+        )
+
+    ax.axhline(PVAL_THRESH, color="#999999", lw=0.6, ls="--", zorder=1)
+    ax.axvline(0,           color="#999999", lw=0.6, ls="--", zorder=1)
+
+    ax.set_title(d.replace('_', ' ').capitalize(),
+                 fontsize=9, pad=10, fontweight='bold')
+
+    ax.tick_params(labelsize=7)
+    ax.set_xlabel(r"$\log_{10}$ OR",  fontsize=8, labelpad=4)
+    ax.set_ylabel(r"$-\log_{10}$(p)", fontsize=8,
+                  labelpad=25, rotation=0, va='center')
+
+    # ── ANNOTATIONS & MASTER LIST ─────────────────────────────────────────
+    drug_flags = flagged_snps.get(d, {})
+    all_flags = relevant_snps.get(d, {})
+
+    inf_count = 0
+
+    if drug_flags or all_flags:
+        target_rows = []
+
+        for snp, vals in drug_flags.items():
+            match = df_raw[df_raw["snp"] == snp]
+            if match.empty:
+                continue
+            row = match.iloc[0].to_dict()
+            row["gene"] = vals[1]
+            target_rows.append(row)
+
+        for var in all_flags:
+            if var['snp'] in [r.get('snp') for r in target_rows]:
+                continue
+            match = df_raw[df_raw["snp"] == var['snp']]
+            if match.empty:
+                continue
+
+            gene_name = var['gene_or_locus']
+            # Only append if the gene is explicitly listed in 'extra' for this drug
+            if extra.get(d) and gene_name in extra[d]:
+                row = match.iloc[0].to_dict()
+                row['gene'] = gene_name
+                target_rows.append(row)
+
+        if target_rows:
+            flagged_df = pd.DataFrame(target_rows)
+
+            # Export exactly this streamlined set to the text file
+            for _, r in flagged_df.iterrows():
+                snp_raw = str(r['snp'])
+                parts = snp_raw.split('_')
+                if len(parts) >= 3:
+                    pos_ref = "_".join(parts[:-1])
+                    alt = parts[-1]
+                    formatted_snp = f"{pos_ref}>{alt}"
+                else:
+                    formatted_snp = snp_raw
+
+                summary_table_data.append({
+                    "Drug": d.replace('_', ' ').capitalize(),
+                    "Gene": r['gene'],
+                    "SNP": formatted_snp
+                })
+
+            # Draw the Plot using the streamlined set
+            gene_stats = flagged_df.groupby(
+                "gene")["neg_log10_p"].max().sort_values(ascending=False)
+            unique_genes = gene_stats.index.tolist()
+            counts = flagged_df.groupby("gene").size()
+
+            ylim = ax.get_ylim()
+            xlim = ax.get_xlim()
+            label_x = xlim[1] * 1.08
+
+            label_ys = np.linspace(
+                ylim[1] * 0.9, ylim[1] * 0.15, len(unique_genes))
+            y_coord_map = {gene: y for gene, y in zip(unique_genes, label_ys)}
+
+            labeled_genes = set()
+
+            for j, row in enumerate(flagged_df.itertuples()):
+                x = float(row.log_or)
+                y = float(row.neg_log10_p)
+                gene = row.gene
+
+                is_inf = not np.isfinite(x) or not np.isfinite(y)
+                x = min(x, xlim[1] *
+                        0.98) if np.isfinite(x) else xlim[1] * 0.98
+                y = min(y, ylim[1] *
+                        0.98) if np.isfinite(y) else ylim[1] * 0.98
+
+                if is_inf:
+                    ax.scatter(x, y, marker='s', s=30,
+                               c="#2CA02C", zorder=6, linewidths=0)
+                    inf_count += 1
+
+                if gene not in labeled_genes:
+                    label_text = f"{gene}" if counts[gene] == 1 else f"{
+                        gene} ({counts[gene]} variants)"
+                    labeled_genes.add(gene)
+                else:
+                    label_text = ""
+
+                target_y = y_coord_map[gene]
+
+                ax.annotate(
+                    label_text,
+                    xy=(x, y),
+                    xytext=(label_x, target_y),
+                    fontsize=7,
+                    fontweight='bold',
+                    va="center",
+                    ha="left",
+                    color="black",
+                    arrowprops=dict(
+                        arrowstyle="-",
+                        color="black",
+                        lw=0.4,
+                        alpha=0.6,
+                        connectionstyle="angle,angleA=0, angleB=90,rad=10",
+                    ),
+                )
+
+    # ── LEGEND ────────────────────────────────────────────────────────────
+    n_up = (df["color"] == "up").sum()
+    n_down = (df["color"] == "down").sum()
+    n_filtered = df["is_filtered"].sum()
+
+    legend_elements = [
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=COLORS["up"],
+               markersize=4, label=f"Sig. (OR > 0) n={n_up}"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=COLORS["down"],
+               markersize=4, label=f"Sig. (OR < 0) n={n_down}"),
+        Line2D([0], [0], marker="o", color="w",
+               markerfacecolor=COLORS["ns"], markersize=4, label="Not sig."),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor="white", markersize=4,
+               markeredgecolor="black", markeredgewidth=0.7, label=f"Filtered n={n_filtered}"),
+        Line2D([0], [0], marker='s', color='w', markerfacecolor='#2CA02C',
+               markersize=4, label=f'Perfect sens. n={inf_count} (OR = inf)')
+    ]
+    fig.legend(
+        handles=legend_elements,
+        loc="lower center",
+        bbox_to_anchor=(0.4, -0.05),
+        ncol=4,
+        frameon=False,
+        fontsize=7,
+        handletextpad=0.4,
+        columnspacing=1.0,
+    )
+
+    plt.subplots_adjust(left=0.1, right=0.6, bottom=0.2, top=0.9)
+    plt.savefig(RESULTS / f'plots/{d}_volcano.pdf',
+                dpi=300, bbox_inches="tight")
+    plt.savefig(RESULTS / f'plots/{d}_volcano.png',
+                dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"  saved {d}_volcano.pdf/png")
+
+if summary_table_data:
+    summary_df = pd.DataFrame(summary_table_data)
+    summary_df = summary_df.drop_duplicates()
+
+    out_file = RESULTS / 'annotated_variants_summary.txt'
+    summary_df.to_csv(out_file, sep='\t', index=False)
+    print(f"\nSuccessfully saved thesis summary table to: {out_file}")

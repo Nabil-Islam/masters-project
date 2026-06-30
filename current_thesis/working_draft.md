@@ -78,8 +78,13 @@ Lastly, there is a filtered $PPE-54$ variant (Position = 3733795, C>T) that is d
 Although Pretomanid (PA) was absent from the dataset, DLM-PA cross-resistance knowledge can be exploited to extrapolate PA's resistance profile. As both drugs attack the F420 activation pathway, variants that confer resistance for DLM can be assumed to cause resistance in PA sample, at least in the interim before further data is available. This is approach mimics the WHO expert rules, where cross-resistance between drugs promotes variants that were not associated with resistance (group 3) to associated with resistance in the interim (group 2). Therefore, the 18 filtered variants from DLM FN samples should also be used for PA-resistance investigations. This importance is exacerbated by the inclusion of DLM and PA in BPaLM, and their recent approval for treatment. 
 DISCUSSION
 
-Ethionamide (ETO) had the most densely populated upper-right quadrant of all second-line drugs, and presented a large filtered candidate set. From the set, two annotated variants were produced: *inhA* T>G (ΔSensitivity = 0.65%, FNP = 100%, MRS = 5%, green marker), and a *gene-not-found* variant (ΔSensitivity = 25.69%). Consultation with the Tuberculist database suggests this unknown gene has a locus tag of 
-    Two annotated variants:
+Ethionamide (ETO) had the most densely populated upper-right quadrant of all second-line drugs, and presented a large filtered candidate set. From the set, two annotated variants were produced: *inhA* T>G (ΔSensitivity = 0.65%, FNP = 100%, MRS = 5%, green marker), and an *intergenic* variant (ΔSensitivity = 25.69%). Analysis of the position shows this variant is situated 14bp upstream of *fabG1*, making the variant identical to the annotated intergenic variant identified in INH resistant samples. ETH filtered variants contained two *inhA* SNPs, and one SNP in $PE-PGRS-19, 33$, and $PPE-51$. Three SNPs were identified in $PPE-55$. 
+
+
+
+
+# Discussion ETH
+- Two annotated variants:
         inhA T>G — ΔSensitivity = 0.65% (green box — infinite OR)
             inhA encodes enoyl-ACP reductase — shared molecular target of both INH and ETO
             INH-ETO cross-resistance mechanism:
@@ -97,6 +102,8 @@ Ethionamide (ETO) had the most densely populated upper-right quadrant of all sec
             Resolving annotation gap = HIGH PRIORITY given magnitude of ablation signal
             Could be regulatory mechanism (promoter/transcriptional regulation of resistance-relevant gene)
             Highest priority ETO candidate for genomic characterisation and wet-lab follow-up
+            ETH filtered variants contained two *inhA* SNPs, and one SNP in $PE-PGRS-19, 33$, and $PPE-51$. Three SNPs were identified in $PPE-55$. 
+
 
 
 

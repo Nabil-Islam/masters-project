@@ -1,0 +1,52 @@
+% !TeX root = ../main.tex
+% ============================================================
+% REQUIRED PACKAGES -- add to your preamble if not present:
+%   \usepackage{booktabs}
+%   \usepackage{longtable}
+%   \usepackage{array}
+%   \usepackage{amsmath}
+%   \usepackage{multirow}
+% ============================================================
+% --- BEGIN TABLE SNIPPET ---
+\begingroup  % <- local scope; all settings below are restored after \endgroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\newlength{\colW}
+\setlength{\colW}{\dimexpr\linewidth - 24pt\relax}% subtract 3 cols * 2 * 4pt tabcolsep
+\newcommand{\tbsecrow}[1]{%
+  \midrule[0.4pt]
+  \multicolumn{3}{l}{\rule{0pt}{9pt}\textbf{\small #1}}\\[1pt]
+}
+\begin{longtable}{%
+  >{\centering\arraybackslash}p{0.060\colW}%   Drug
+  >{\raggedright\arraybackslash}p{0.120\colW}% Gene
+  >{\raggedright\arraybackslash}p{0.820\colW}% Variant (stats inline)
+}
+\caption{Levofloxacin and moxifloxacin variants in drug-resistance, cross-resistance, and \ppe genes. For each variant, the parenthesis lists FNP, RSM, and $\Delta$ sensitivity (\%), followed by the association statistics $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$. Variants marked $\dagger$ have an infinite odds ratio (complete separation).}
+\label{tab:fq-levo-moxi}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endfirsthead
+\caption*{Table~\ref{tab:fq-levo-moxi} \textit{(continued)}}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\small\textit{continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+% -------------------------------------------------------
+\tbsecrow{Levofloxacin}
+& \textit{PE\_PGRS33}	& \texttt{2062066\_TCCGCCGGCGCCGCCGGCC>T} (20\%, 2\%, --) [5.54, 1.14]\\
+% -------------------------------------------------------
+\tbsecrow{Moxifloxacin}
+& \textit{PPE54}	& \texttt{3733185\_G>C}$^{\dagger}$ (100\%, 1\%, --) [5.69, $\infty$]\\
+
+\end{longtable}
+\endgroup
+% --- END TABLE SNIPPET ---

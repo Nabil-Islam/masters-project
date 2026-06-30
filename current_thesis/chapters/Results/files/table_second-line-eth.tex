@@ -1,0 +1,57 @@
+% !TeX root = ../main.tex
+% ============================================================
+% REQUIRED PACKAGES -- add to your preamble if not present:
+%   \usepackage{booktabs}
+%   \usepackage{longtable}
+%   \usepackage{array}
+%   \usepackage{amsmath}
+%   \usepackage{multirow}
+% ============================================================
+% --- BEGIN TABLE SNIPPET ---
+\begingroup  % <- local scope; all settings below are restored after \endgroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\newlength{\colW}
+\setlength{\colW}{\dimexpr\linewidth - 24pt\relax}% subtract 3 cols * 2 * 4pt tabcolsep
+\newcommand{\tbsecrow}[1]{%
+  \midrule[0.4pt]
+  \multicolumn{3}{l}{\rule{0pt}{9pt}\textbf{\small #1}}\\[1pt]
+}
+\begin{longtable}{%
+  >{\centering\arraybackslash}p{0.060\colW}%   Drug
+  >{\raggedright\arraybackslash}p{0.120\colW}% Gene
+  >{\raggedright\arraybackslash}p{0.820\colW}% Variant (stats inline)
+}
+\caption{Ethionamide and delamanid variants in drug-resistance, cross-resistance, and \ppe genes. For each variant, the parenthesis lists FNP, RSM, and $\Delta$ sensitivity (\%), followed by the association statistics $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$. Variants marked $\dagger$ have an infinite odds ratio (complete separation).}
+\label{tab:eth-dlm-amk-cap}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endfirsthead
+\caption*{Table~\ref{tab:eth-dlm-amk-cap} \textit{(continued)}}\\
+\toprule
+\textbf{Drug} & \textbf{Gene} & \textbf{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\small\textit{continued on next page}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+
+% -------------------------------------------------------
+\tbsecrow{Ethionamide}
+& \textit{PPE55}	& \texttt{3748412\_G>A}$^{\dagger}$ (100\%, 5\%, --) [5.09, $\infty$], \texttt{3748936\_G>A} (77\%, 5\%, --) [10.36, 1.78], \texttt{3752124\_G>A} (85\%, 5\%, --) [12.18, 2]\\
+& \textit{inhA}	& \texttt{1674262\_A>G} (77\%, 5\%, --) [10.36, 1.78]\\
+& \textit{PPE51}	& \texttt{3502814\_G>A}$^{\dagger}$ (100\%, 5\%, --) [5.09, $\infty$]\\
+& \textit{PE\_PGRS33}	& \texttt{2061315\_C>A} (77\%, 5\%, --) [10.36, 1.78]\\
+& \textit{PE\_PGRS19}	& \texttt{1188514\_A>G} (86\%, 5\%, --) [6.82, 2.03]\\
+& \textit{pbpB}	& \texttt{2426048\_G>C} (86\%, 5\%, -0.52\%) [6.82, 2.03]\\
+% -------------------------------------------------------
+\tbsecrow{Delamanid}
+& \textit{PPE54}	& \texttt{3733795\_C>T} (14\%, 1\%, --) [5.9, 1.19]\\
+
+\end{longtable}
+\endgroup
+% --- END TABLE SNIPPET ---

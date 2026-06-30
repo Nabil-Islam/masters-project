@@ -219,7 +219,7 @@
 \newcommand{\phiu}{\underline{\phi}}
 \newcommand{\Phiu}{\underline{\Phi}}
 \newcommand{\mtb}{\textit{Mycobacterium tuberculosis }}
-\newcommand{\ppe}{\textit{pe/ppe} }
+\newcommand{\ppe}{PE/PPE}
 \newcommand{\etal}{\textit{et al.}}
 %%%%%%
 %%%%%%%%Theorems with different numbers%%%%%%%%
