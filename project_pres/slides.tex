@@ -12,7 +12,7 @@
 
 
 
-\title[Final oral presentation]{Discovering Novel \textit{Mycobacterium tuberculosis} (M.tb) mutations}
+\title[Final oral presentation]{Discovering Novel \textit{Mycobacterium tuberculosis} (M.tb) mutations \\[0.5em] \large \textbf{Supervisors:} Dr. Michael Hall, Prof. Lachlan Coin}
 
 
 \beamertemplatenavigationsymbolsempty
@@ -30,8 +30,6 @@
   \textbf{Venue:} Peter Doherty institute of Infection and Immunity\\
   Department of Microbiology and Immunology\\
 The University of Melbourne}
-
-\date{26 May 2026}
 
 \begin{noheadline}
   \begin{frame}\maketitle\end{frame}
@@ -365,6 +363,37 @@ The University of Melbourne}
   \end{figure}
 \end{frame}
 
+
+\begin{frame}{Variants with $\Delta \text{Sens.} < -0.5\%$}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\newlength{\colW}
+\setlength{\colW}{\dimexpr\linewidth - 24pt\relax}
+\newcommand{\tbsecrow}[1]{%
+  \midrule[0.4pt]
+  \multicolumn{3}{l}{\rule{0pt}{9pt}\textbf{\small #1}}\\[1pt]
+}
+
+\begin{tabular}{%
+  >{\centering\arraybackslash}p{0.060\colW}%   Drug
+  >{\raggedright\arraybackslash}p{0.120\colW}% Gene
+  >{\raggedright\arraybackslash}p{0.820\colW}% Variant (stats inline)
+}
+\toprule
+\textbf{Drug} & \textit{Gene} & \texttt{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
+\midrule
+\tbsecrow{Clofazimine}
+& \textit{ethA}   & \texttt{4326333\_C>G} (22\%, 1\%, -11.08\%) [17.59, 1.43]\\
+& \textit{Rv3254} & \texttt{3634487\_G>A} (57\%, 1\%, -3.67\%) [6.16, 2.05]\\
+\tbsecrow{Ethionamide}
+& \textit{pbpB}	& \texttt{2426048\_G>C} (86\%, 5\%, -0.52\%) [6.82, 2.03]\\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{frame}
+
 \begin{frame}{Candidate mutations - first-line drugs}
   \begin{figure}[H]
     \centering
@@ -474,20 +503,13 @@ The University of Melbourne}
 \end{frame}
 
 \begin{frame}{Ablation biological significance}
-  \begin{itemize}
-    \item In $3/4$ 1st-line drugs, SNPs found that \textit{improved} \textbf{sensitivity} (compared to non-ablated baseline)
       \begin{itemize}
-        \item \textbf{H} - \textit{katG} and \textit{rpoB} 
-        \item \textbf{R} - \textit{rpoB} (drug target gene)
-        \item \textbf{E} - \textit{rpoB} , \textit{katG} , \textit{embB} (drug target gene)
-      \end{itemize}
-    \item For 2nd-line drugs:
-      \begin{itemize}
-        \item \textbf{FQs} - Both LFX and MFX found ablated SNPs in \textit{gyrA} (drug target gene)
-        \item \textbf{CFZ} - Ablated SNPs of unknown function 
-        \item \textbf{ETO} - \textit{inhA} T$>$G, possible \textbf{cross-resistance} 
-      \end{itemize}
-    \item Potential confounders - \textit{rpoB} C$>$T, \textit{katG} C$>$G 
+        \item \textbf{CFZ:}          
+          \begin{itemize}
+            \item \textit{ethA}, \texttt{C>G}, -11.08\%, possible confounder as \textit{ethA} not associated with \textbf{CFZ}
+            \item \textit{Rv3254}, \texttt{G>A}, -3.67\%, Candidate for further investigation
+          \end{itemize}
+        \item \textbf{ETO} - \textit{pbpB}, \texttt{G>C}, -0.52\%, marginal loss, association with cell-wall synthesis to be investigated 
       \end{itemize}
 \end{frame}
 
@@ -507,6 +529,31 @@ The University of Melbourne}
   \end{itemize}
 \end{frame}
 
+
+\begin{frame}{PE/PPE Genes}
+      \begin{itemize}
+        \item Large set of PE/PPE variants $\rightarrow$ masked ~10\% of genome \textit{does} harbour FN-associated variants
+        \item Some notable variants:
+          \begin{itemize}
+            \item \textit{PPE54} \texttt{3733405\_G>A}, $>$70\% FNP for RIF, INH, EMB
+            \begin{itemize}
+              \item \textit{PPE54} contributes to cell membrane and wall architecture
+              \item Likely compensatory for resistance adaptations
+            \end{itemize}
+            \item \textit{PPE51} \texttt{3502814\_G>A}, ETO (FNP=100\%), STP (FNP=58\%)
+              \begin{itemize}
+                \item involved with nutrient acquisition, and efflux upregulation
+              \end{itemize}
+            \item \textit{PPE50} \texttt{3501668\_G>C}, CIP (FNP=100\%)
+              \begin{itemize}
+                \item Works in conjunction with \textit{PPE51} for OM transport
+              \end{itemize}
+              
+          \end{itemize}
+          
+      \end{itemize}
+\end{frame}
+
 \begin{frame}{Limitations}
   \begin{itemize}
     \item Training data lacks resistant cases for newer drugs
@@ -518,20 +565,16 @@ The University of Melbourne}
       \begin{itemize}
         \item May not learn cross-resistance or pleiotropic R mechanisms
       \end{itemize}
-    \item SNP filtering needs to be more robust
-    \begin{itemize}
-      \item Flag and remove confounders
-      \item Comprehensive screening and flagging of lineage patterns 
-    \end{itemize}
-  \item Possible relaxation of filtering significance threshold
-    \begin{itemize}
-      \item $-\log_{10}(p) \geq 5$ - maybe too stringent for newer drugs
-    \end{itemize}
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Next steps}
   \begin{itemize}
+    \item Model architecture update - hidden layers for cross-resistance
+    \begin{itemize}
+      \item Improve sensitivity performance for FQs, BDQ, CFZ
+      \item Increase specificity floor to 0.98 or 98\%
+    \end{itemize}
     \item \textit{Update} the dataset for newer drugs
     \begin{itemize}
       \item Phenotypic R data for TD, PA, and PTO
@@ -540,10 +583,12 @@ The University of Melbourne}
         \item BPaLM - promising 
       \end{itemize}
     \end{itemize}
-    \item Validation from external cohort (CRyPTIC consortium, MIRU-VNTR)
-    \item Lineage stratification for evaluation 
-    \item Wet-lab validation of candidate SNPs $\rightarrow$ possibly included in future \textbf{catalogues} or \textbf{AMR prediction tools}
-    \item Implement different network architecture (Hidden layers for shared mechanisms (ETO-INH), etc.)
+    \item Wet lab validation for:
+    \begin{itemize}
+      \item CFZ - \textit{Rv3254} \texttt{3634487\_G>A}
+      \item ETO - \textit{pbpB} \texttt{2426048\_G>C}
+    \end{itemize}
+    
   \end{itemize}
 \end{frame}
 
