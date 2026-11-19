@@ -133,12 +133,12 @@
 - Significance tests (McNemar) and confidence intervals
 - More resistant isolates for newer drugs; validate candidates after re-analysis
 
-## 28. References
-- (Skip unless asked)
-
-## 29. Acknowledgements
+## 28. Acknowledgements
 - Thank supervisors (Michael Hall, Lachlan Coin) and the Coin lab
 - Leave this slide up during questions
+
+## 29. References
+- (Skip unless asked)
 
 ## 30. Supplementary: F1
 - Backup only; F1 combines precision and sensitivity
