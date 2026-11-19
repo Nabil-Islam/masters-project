@@ -334,6 +334,17 @@ The University of Melbourne}
 
 \begin{frame}{Training schematic}
   \includegraphics[width=\textwidth]{./figures/train.drawio.pdf}
+  \vfill
+  {\footnotesize Threshold set per drug to match TB-Profiler's specificity. Filtered (feature ablation) branch: work in progress, not in the current results.}
+\end{frame}
+
+\begin{frame}{Evaluation design}
+  \begin{itemize}
+    \item Fixed accession-level split: 80\% train (5 CV folds) / 20\% held-out test, stratified per drug
+    \item Thresholds chosen on a validation fold to match \textbf{TB-Profiler's specificity} per drug
+    \item Loss weights tuned by 5-fold CV on training data only; test set used once
+    \item Adam, learning rate $10^{-2}$, early stopping (converges in $\approx$15 epochs)
+  \end{itemize}
 \end{frame}
 
 % Results
@@ -343,55 +354,6 @@ The University of Melbourne}
 
 \begin{frame}{Model performance (Specificity)}
   \includegraphics[width=\textwidth]{./figures/specificity.pdf}
-\end{frame}
-
-
-\begin{frame}{Learning performance for augmented WHO catalogue} 
-  \begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.45\textwidth}
-      \includegraphics[width=\textwidth]{./figures/filtlearnA.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.45\textwidth}
-      \includegraphics[width=\textwidth]{./figures/filtlearnB.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.45\textwidth}
-      \includegraphics[width=\textwidth]{./figures/filtlearnC.png}
-    \end{subfigure}
-  \end{figure}
-\end{frame}
-
-
-\begin{frame}{Variants with $\Delta \text{Sens.} < -0.5\%$}
-\begingroup
-\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\newlength{\colW}
-\setlength{\colW}{\dimexpr\linewidth - 24pt\relax}
-\newcommand{\tbsecrow}[1]{%
-  \midrule[0.4pt]
-  \multicolumn{3}{l}{\rule{0pt}{9pt}\textbf{\small #1}}\\[1pt]
-}
-
-\begin{tabular}{%
-  >{\centering\arraybackslash}p{0.060\colW}%   Drug
-  >{\raggedright\arraybackslash}p{0.120\colW}% Gene
-  >{\raggedright\arraybackslash}p{0.820\colW}% Variant (stats inline)
-}
-\toprule
-\textbf{Drug} & \textit{Gene} & \texttt{Variant} (FNP, RSM, $\Delta$ sensitivity ($\%$)) $[-\log_{10}p,\ \log_{10}\mathrm{OR}]$\\
-\midrule
-\tbsecrow{Clofazimine}
-& \textit{ethA}   & \texttt{4326333\_C>G} (22\%, 1\%, -11.08\%) [17.59, 1.43]\\
-& \textit{Rv3254} & \texttt{3634487\_G>A} (57\%, 1\%, -3.67\%) [6.16, 2.05]\\
-\tbsecrow{Ethionamide}
-& \textit{pbpB}	& \texttt{2426048\_G>C} (86\%, 5\%, -0.52\%) [6.82, 2.03]\\
-\bottomrule
-\end{tabular}
-\endgroup
 \end{frame}
 
 \begin{frame}{Candidate mutations - first-line drugs}
@@ -491,26 +453,16 @@ The University of Melbourne}
 
 \begin{frame}{Model performance}
   \begin{itemize}
-    \item Model converges rapidly
-    \item Catalogue-weighted model's \textbf{sensitivity} outperformed or matched TB-Profiler (baseline) - $13/15$ drugs
-    \item For 14/15 drugs, \textbf{sensitivity} \textit{improved} after training and threshold application
-    \item There was a trade-off in \textbf{specificity}, with a floor of 0.8 during threshold sweeps
+    \item All tools scored on the same held-out test isolates (20\%); trained models set to \textbf{TB-Profiler's specificity}
+    \item WHO+ER model vs TB-Profiler (sensitivity):
       \begin{itemize}
-        \item $\uparrow$ Sens. $\implies$ $\uparrow$ TPR $\implies$ $\downarrow$ Missed R cases
-        \item $\downarrow$ Spec. $\implies$ $\uparrow$ FPR $\implies$ $\uparrow$ Missed S cases
+        \item \textbf{DLM: 0.48 vs 0.17} (11 vs 4 of 23 R isolates); CFZ tied
+        \item Within 0.03 for INH, RIF, EMB, STP; within $\approx$0.05--0.07 for AMK, CAP, KAN, ETO, PZA
+        \item Largest gap: fluoroquinolones (LFX $-0.14$, MFX $-0.17$), already present before training
       \end{itemize}
+    \item Training: large specificity gains (ETO 0.53$\rightarrow$0.88, DLM 0.87$\rightarrow$0.996); sensitivity gains for EMB, FQs
+    \item Up-weighting false positives in the loss (27-setting CV grid): no improvement
   \end{itemize}
-\end{frame}
-
-\begin{frame}{Ablation biological significance}
-      \begin{itemize}
-        \item \textbf{CFZ:}          
-          \begin{itemize}
-            \item \textit{ethA}, \texttt{C>G}, -11.08\%, possible confounder as \textit{ethA} not associated with \textbf{CFZ}
-            \item \textit{Rv3254}, \texttt{G>A}, -3.67\%, Candidate for further investigation
-          \end{itemize}
-        \item \textbf{ETO} - \textit{pbpB}, \texttt{G>C}, -0.52\%, marginal loss, association with cell-wall synthesis to be investigated 
-      \end{itemize}
 \end{frame}
 
 \begin{frame}{Candidate Mutations}
@@ -527,6 +479,8 @@ The University of Melbourne}
         \item \textbf{Exception} - ETO $\rightarrow$ INH-ETO cross-resistance, linked mechanisms
       \end{itemize}
   \end{itemize}
+  \vfill
+  {\footnotesize \textbf{Exploratory:} all isolates, not yet corrected for population structure -- clonal clusters can produce many linked variants.}
 \end{frame}
 
 
@@ -538,7 +492,7 @@ The University of Melbourne}
             \item \textit{PPE54} \texttt{3733405\_G>A}, $>$70\% FNP for RIF, INH, EMB
             \begin{itemize}
               \item \textit{PPE54} contributes to cell membrane and wall architecture
-              \item Likely compensatory for resistance adaptations
+              \item Candidate compensatory variant -- or a marker of an MDR lineage (enriched across several drugs)
             \end{itemize}
             \item \textit{PPE51} \texttt{3502814\_G>A}, ETO (FNP=100\%), STP (FNP=58\%)
               \begin{itemize}
@@ -556,39 +510,20 @@ The University of Melbourne}
 
 \begin{frame}{Limitations}
   \begin{itemize}
-    \item Training data lacks resistant cases for newer drugs
-      \begin{itemize}
-        \item Class imbalances for BDQ, LZD, DLM, CFZ
-        \item No data for TD, PA, or PTO
-      \end{itemize}
-    \item Model rapidly converges $\rightarrow$ rapidly hits \textbf{representational capacity}
-      \begin{itemize}
-        \item May not learn cross-resistance or pleiotropic R mechanisms
-      \end{itemize}
+    \item Few resistant isolates for BDQ, LZD, DLM, CFZ (23--30 in test) $\rightarrow$ wide uncertainty
+    \item SNP-level features miss what TB-Profiler uses: minor-allele (heteroresistant) calls,
+          gene-level loss-of-function, indels $\rightarrow$ likely cause of the FQ gap
+    \item FN enrichment not yet corrected for population structure (clonal clusters)
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Next steps}
   \begin{itemize}
-    \item Model architecture update - hidden layers for cross-resistance
-    \begin{itemize}
-      \item Improve sensitivity performance for FQs, BDQ, CFZ
-      \item Increase specificity floor to 0.98 or 98\%
-    \end{itemize}
-    \item \textit{Update} the dataset for newer drugs
-    \begin{itemize}
-      \item Phenotypic R data for TD, PA, and PTO
-      \item More R data for BDQ, LZD, DLM, and CFZ
-      \begin{itemize}
-        \item BPaLM - promising 
-      \end{itemize}
-    \end{itemize}
-    \item Wet lab validation for:
-    \begin{itemize}
-      \item CFZ - \textit{Rv3254} \texttt{3634487\_G>A}
-      \item ETO - \textit{pbpB} \texttt{2426048\_G>C}
-    \end{itemize}
-    
+    \item Add loss-of-function, amino-acid-level and minor-allele features
+    \item Sub-lineage-stratified enrichment (CMH) $\rightarrow$ rebuild and retrain the filtered model
+    \item Paired significance testing (McNemar) and confidence intervals per drug
+    \item More resistant isolates for newer drugs (BPaLM); no data for TD, PA, PTO
+    \item Candidates (\textit{Rv3254}, \textit{pbpB}) pending re-analysis before wet-lab validation
   \end{itemize}
 \end{frame}
 
