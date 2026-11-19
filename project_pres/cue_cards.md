@@ -134,10 +134,14 @@
 ## 28. References
 - (Skip unless asked)
 
-## 29. Supplementary: F1
+## 29. Acknowledgements
+- Thank supervisors (Michael Hall, Lachlan Coin) and the Coin lab
+- Leave this slide up during questions
+
+## 30. Supplementary: F1
 - Backup only; F1 combines precision and sensitivity
 
-## 30. Supplementary: weighted loss
+## 31. Supplementary: weighted loss
 - Backup for "how did you tune the loss?"
 - α: extra weight on resistant isolates; λ: false-positive cost; γ: focus that cost on actual false positives
 - 27 settings, 5-fold CV, best was the original loss
