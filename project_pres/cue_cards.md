@@ -70,17 +70,19 @@
 - Thresholds chosen on a validation fold, never on test
 - Converges in ~15 epochs with learning rate 0.01
 
-## 16. Sensitivity figure
+## 16. Specificity figure (establish this first)
 - How to read it: blue = TB-Profiler; hollow = untrained catalogue model; filled = trained; stem = change from training
-- Same test isolates for everyone; trained models held at TB-Profiler's specificity
+- Same test isolates for everyone
+- Trained models sit at or just above TB-Profiler: by design, thresholds set to match it
+- So the next slide compares sensitivity on equal footing
+- Untrained hollow dots: where the catalogue alone over-calls resistance
+- ETO: 0.53 -> 0.88 after training; DLM: 0.87 -> 0.996: training mainly bought specificity
+
+## 17. Sensitivity figure
+- Specificity now fixed at TB-Profiler's level, so this is a fair comparison
 - Point to delamanid: trained ER model 0.48 vs TB-Profiler 0.17
 - Point to fluoroquinolones: gap already present before training
-
-## 17. Specificity figure
-- Trained models sit at or just above TB-Profiler: that's by design
-- Untrained hollow dots: where the catalogue alone over-calls resistance
-- ETO: 0.53 -> 0.88 after training; DLM: 0.87 -> 0.996
-- Read with the sensitivity slide: high untrained sensitivity often came with low specificity
+- High untrained hollow dots (e.g. ETO) came with low specificity on the previous slide
 
 ## 18. Candidate mutations: first-line
 - Volcano: x = effect (log odds ratio), y = significance
