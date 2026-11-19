@@ -41,7 +41,11 @@
 - Training can then only move away from the catalogue where the data supports it
 
 ## 10. Updating with expert rules
-- WHO expert rules add variants the grading misses (e.g. loss-of-function in key genes)
+- Expert rules came with the 2023 update (2nd edition) of the catalogue
+- Loss-of-function (stop, frameshift, start loss, gene deletion) in *katG* (INH), *gid* (STP)
+- Any non-synonymous change in *pncA*, *ethA*, *tlyA*, *Rv0678*/*pepQ*, *ddn*/*fbiA-C*/*fgd1*
+- Any non-synonymous change in the *rpoB* RRDR (RIF)
+- Effects come from the SnpEff annotation in the VCFs
 - "WHO + ER" = catalogue plus expert-rule variants: the second model throughout
 
 ## 11. Augmenting SNP lists from FN samples
@@ -80,7 +84,7 @@
 
 ## 17. Sensitivity figure
 - Specificity now fixed at TB-Profiler's level, so this is a fair comparison
-- Point to delamanid: trained ER model 0.48 vs TB-Profiler 0.17
+- Point to delamanid: trained ER model 0.48 vs TB-Profiler 0.17 (WHO model ties TB-Profiler; caveat on next results slide)
 - Point to fluoroquinolones: gap already present before training
 - High untrained hollow dots (e.g. ETO) came with low specificity on the previous slide
 
@@ -110,6 +114,12 @@
 - Biggest gap: fluoroquinolones (LFX -0.14, MFX -0.17), present before training
 - Training mainly bought specificity
 - Penalising false positives more in the loss didn't help (negative result)
+- **Caveat (say it before anyone asks):**
+  - ER variants were collected from resistant isolates across the whole dataset, test set included
+  - Resistant-only because that's how I was approaching the FN enrichment
+  - TB-Profiler applies the rules to every isolate, regardless of phenotype
+  - So the ER gains, especially their size, and DLM most of all, are probably somewhat optimistic
+  - The WHO model doesn't have this issue, and it sits close to TB-Profiler
 
 ## 24. Candidate mutations: summary
 - First-line busy, second-line sparse
@@ -123,11 +133,14 @@
 
 ## 26. Limitations
 - Few resistant isolates for BDQ, LZD, DLM, CFZ (23-30 in test): wide uncertainty
-- SNP features miss low-frequency (heteroresistant) calls, loss-of-function rules, indels: likely the FQ gap
+- Low-frequency (heteroresistant) variants not called: likely the FQ gap (*gyrA*/*gyrB* mutations are well catalogued, so they're being missed, not unknown)
+- (Slide also lists LoF and indels: they *are* in the ER set, but only as variants seen in the data; say "covered, but only as observed variants")
 - Enrichment not yet corrected for related isolates
+- ER variant list built from resistant isolates in the full dataset (as on the performance slide)
 
 ## 27. Next steps
-- Better features: loss-of-function, amino-acid level, minor-allele calls
+- Better features: minor-allele calls first (FQ gap); gene-level LoF so unseen frameshifts are covered
+- **Say (not on slide):** rebuild the expert-rule list from all isolates regardless of phenotype, the way TB-Profiler applies the rules
 - Cross-resistance architecture (LFX-MFX, BDQ-CFZ, INH-ETO): built, being evaluated
 - Lineage-stratified enrichment, then retrain the filtered model
 - Significance tests (McNemar) and confidence intervals
@@ -153,3 +166,10 @@
 - **Earlier results showed more wins?** Earlier comparison ran the model at lower specificity than TB-Profiler, on different isolates. Fixing both changed the numbers.
 - **Is DLM significant?** Largest difference, but not yet formally tested: McNemar is the next step.
 - **Why not a deeper network?** The gap is in the features; a more complex model can't use information that isn't in the input.
+- **Why compare with TB-Profiler?** Widely used, open-source, built on the same WHO catalogue: it's catalogue lookup done well, so it shows whether learning adds anything. Its calls were available per isolate, so both tools are compared on the same isolates at the same specificity. Call it the reference tool, not the gold standard (that's phenotypic testing).
+- **Why build on the WHO catalogue?** Far more evidence than I could learn alone (~50k isolates; I have ~100 resistant for BDQ). Trusted and interpretable: every weight is one mutation, anchored to its catalogue value. Clean comparison: the untrained model *is* the catalogue.
+- **Isn't that circular? The catalogue may include your isolates.** Partly, yes: makes the starting point optimistic, but equally for TB-Profiler, so the comparison stays fair.
+- **Why focus on false negatives over false positives?** FN: resistant infection treated as susceptible: treatment failure, more resistance, onward spread. FP: unnecessary second-line drugs, serious but recoverable. FNs are also where unknown mechanisms are. Design follows: hold FP rate at TB-Profiler's level, then recover as many FNs as possible. Caveats: some FNs are phenotype errors (EMB, PZA testing less reliable) or low-frequency variants.
+- **Expert rules use phenotypes too, don't they?** Yes, WHO's (e.g. cross-drug grade upgrades), but from WHO's data: external evidence. The issue here is that *this study's* phenotypes, test isolates included, decided which variants became features.
+- **Is the ER issue leakage or selection bias?** Both: feature selection using the outcome (selection bias), and it used test labels (leakage). Plain version: "the test isolates helped decide which variants went into the model."
+- **Then what's the actual contribution?** A working prototype: catalogue-initialised, interpretable model, evaluated fairly against TB-Profiler at matched specificity; WHO model close to TB-Profiler; clear, testable next steps.
