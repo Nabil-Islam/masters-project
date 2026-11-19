@@ -520,6 +520,7 @@ The University of Melbourne}
 \begin{frame}{Next steps}
   \begin{itemize}
     \item Add loss-of-function, amino-acid-level and minor-allele features
+    \item Cross-resistance architecture (LFX--MFX, BDQ--CFZ, INH--ETO): implemented, to be evaluated under the same protocol
     \item Sub-lineage-stratified enrichment (CMH) $\rightarrow$ rebuild and retrain the filtered model
     \item Paired significance testing (McNemar) and confidence intervals per drug
     \item More resistant isolates for newer drugs (BPaLM); no data for TD, PA, PTO
@@ -548,6 +549,28 @@ The University of Melbourne}
 
 \begin{frame}{Supplementary Figure (F1 Score)}
   \includegraphics[width=\textwidth]{./figures/f1.pdf}
+\end{frame}
+
+\begin{frame}{Supplementary: weighted loss}
+  \[
+    \mathcal{L} = -\frac{1}{\sum_i w_i}\sum_i \Big[\, w_{+}\, y_i \log \hat{p}_i
+      \;+\; w_{-,i}\,(1-y_i)\log(1-\hat{p}_i) \Big]
+  \]
+  \vspace{-0.5em}
+  \[
+    w_{+} = \left(\frac{n_S}{n_R}\right)^{\alpha}
+    \qquad
+    w_{-,i} = \lambda\,\frac{\hat{p}_i^{\,\gamma}}{\operatorname{mean}_{j \in S}\big(\hat{p}_j^{\,\gamma}\big)}
+  \]
+  \small
+  \begin{itemize}
+    \item $\alpha$: extra weight on resistant isolates for rare-resistance drugs ($\alpha=0.5$: $\sqrt{n_S/n_R}$)
+    \item $\lambda$: cost of a false positive (weight on susceptible isolates)
+    \item $\gamma$: focuses that cost on susceptible isolates scored as resistant (actual FPs); mean weight stays $\lambda$
+    \item Per drug; missing phenotypes masked
+    \item 5-fold CV grid $\alpha \in \{0.5, 0, -0.25\}$, $\lambda \in \{1, 2, 4\}$, $\gamma \in \{0, 1, 2\}$
+          $\rightarrow$ best: $\alpha=0.5,\ \lambda=1,\ \gamma=0$ (the original loss)
+  \end{itemize}
 \end{frame}
 
 % Using footnote citations, no references page
